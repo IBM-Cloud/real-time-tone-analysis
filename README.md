@@ -2,7 +2,9 @@
 
 Real Time Tone Analysis samples dictation or conversations and displays a working timeline that plots the tone of the language spoken.
 
-The project is an experiment that combines watson speech to text, and watson tone analysis services, integrating them in a node.js backend running on IBM Bluemix.
+Here is a [working example](http://realtime-tone.mybluemix.net/)
+
+The project is an experiment that combines watson [speech to text](https://speech-to-text-demo.mybluemix.net/), and [watson tone analysis](https://tone-analyzer-demo.mybluemix.net/) services, integrating them in a node.js backend running on IBM Bluemix.
 
 ![concept](./design/real-time-tone.png)
 
@@ -14,7 +16,10 @@ The same combination of technology might be used personally to help an individua
 
 Health organizations, or insurance companies might encourage individuals to manage their emotions in connection with physical health - imagine being able to understand how an emotional conversation affects your pulse or blood pressure - and how health connected devices could feedback stimulus to help you be aware of that and manage it.
 
+## Flow
+
 The app opens with a simple scene - a button to begin analyzing dictation or conversation ...
+
 
 
 ![concept](./design/scene-1.png)
@@ -24,9 +29,14 @@ Clicking the button leads to a simple dashboard that displays the spoken words, 
 
 ![concept](./design/scene-2.png)
 
-
+## Plan
 
 This project is being developed as a half day workshop to train small groups of developers in Bluemix, Watson and Node technologies.
+
+[Milestones](https://waffle.io/IBM-Bluemix/real-time-tone-analysis)
+
+[Waffle Board](https://waffle.io/IBM-Bluemix/real-time-tone-analysis)
+
 
 
 ## Running the app on Bluemix
