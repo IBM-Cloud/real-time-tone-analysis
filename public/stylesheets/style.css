@@ -3,7 +3,7 @@ html {
     background-color: #fef9f9;
     width: 100%;
     height: 100%;
-    margin: 0 auto;
+    margin: 0;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #ffffff;
 }
@@ -18,13 +18,12 @@ html {
     padding: 0;
     background: #dd4131;
     height: 100px;
-    /* border-bottom: 1px solid #addfea; */
+    border-bottom: 4px solid #f3776b;
     display: flex;
     flex-direction: column;
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
-    /* border-bottom: 1px solid #eee; */
 }
 
 .name {
@@ -154,7 +153,7 @@ a {
     display: flex;
     border-radius: 200px;
     background: white;
-    border: 3px solid #dd4131;
+    border: 4px solid #f3776b;
 }
 
 .label {
