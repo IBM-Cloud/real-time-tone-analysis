@@ -29,9 +29,9 @@ html {
 
 .name {
     color: white;
-    font-size: 24px;
+    font-size: 18px;
     margin-bottom: 2px;
-    /*    font-weight: bold;*/
+    font-weight: bold;
 }
 
 .title {
@@ -159,7 +159,7 @@ a {
 
 .label {
     color: #dd4131;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     padding: 20px;
     display: flex;
