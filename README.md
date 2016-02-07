@@ -1,8 +1,33 @@
 # real-time-tone-analysis
 
-Real Time Tone Analysis samples conversations and displays a working tone of that conversation. 
+Real Time Tone Analysis samples dictation or conversations and displays a working timeline that plots the tone of the language spoken.
 
-![Bluemix Deployments](https://deployment-tracker.mybluemix.net/stats/eff78d4dfb884b87f7ff7aae5fe0f45d/badge.svg)
+The project is an experiment that combines watson speech to text, and watson tone analysis services, integrating them in a node.js backend running on IBM Bluemix.
+
+![concept](./design/real-time-tone.png)
+
+There are many real world opportunities for combining these services. For example in call centres, offering instant feedback to operators, so that they can measure and control their response, or companies that run call centres to be concsious of repsonse levels over time.
+
+The same combination of technology might be used personally to help an individual learn about their engagement and responses and manage it for themselves. This becomes especially interesting when tying the technology to other data sources, for example health data.
+
+![concept](./design/realtime-tone-concept.png)
+
+Health organizations, or insurance companies might encourage individuals to manage their emotions in connection with physical health - imagine being able to understand how an emotional conversation affects your pulse or blood pressure - and how health connected devices could feedback stimulus to help you be aware of that and manage it.
+
+The app opens with a simple scene - a button to begin analyzing dictation or conversation ...
+
+
+![concept](./design/scene-1.png)
+
+Clicking the button leads to a simple dashboard that displays the spoken words, and periodically displays a snapshot of the current tone analyis, as well as a timeline of a running tone analyis ...
+
+
+![concept](./design/scene-2.png)
+
+
+
+This project is being developed as a half day workshop to train small groups of developers in Bluemix, Watson and Node technologies.
+
 
 ## Running the app on Bluemix
 
