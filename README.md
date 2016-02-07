@@ -33,7 +33,7 @@ Clicking the button leads to a simple dashboard that displays the spoken words, 
 
 This project is being developed as a half day workshop to train small groups of developers in Bluemix, Watson and Node technologies.
 
-[Milestones](https://waffle.io/IBM-Bluemix/real-time-tone-analysis)
+[Milestones](https://github.com/IBM-Bluemix/real-time-tone-analysis/milestones)
 
 [Waffle Board](https://waffle.io/IBM-Bluemix/real-time-tone-analysis)
 
