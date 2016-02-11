@@ -1,16 +1,36 @@
 {
-	"name": "NodejsStarterApp",
+	"name": "realtime-tone",
 	"version": "0.0.1",
-	"description": "A sample nodejs app for Bluemix",
+	"description": "Analyze the tone of spoken words in real time using Bluemix and Watson",
 	"scripts": {
 		"start": "node app.js"
 	},
 	"dependencies": {
-		"express": "4.12.x",
-		"cfenv": "1.0.x"
+		"express": "4.13.x",
+    "body-parser": "1.14.x",
+    "watson-developer-cloud": "1.1.x",
+		"cfenv": "1.0.x",
+    "cf-deployment-tracker-client": "0.0.x"
 	},
-	"repository": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IBM-Bluemix/real-time-tone-analysis.git"
+  },
+  "bugs": {
+    "url": "https://github.com/IBM-Bluemix/real-time-tone-analysis/issues"
+  },
 	"engines": {
 		"node": "0.12.x"
-	} 
+	},
+  "contributors": [
+    {
+      "name": "Jake Peyser",
+      "email": "jepeyser@us.ibm.com"
+    },
+    {
+      "name": "Anton McConville",
+      "email": "anton.mcconville@ca.ibm.com"
+    }
+  ],
+  "license": "Apache-2.0"
 }
