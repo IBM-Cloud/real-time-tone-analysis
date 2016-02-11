@@ -168,6 +168,20 @@ a {
 .baseline {
     color: #f3776b;
     padding: 10px;
+    text-align: center;
+}
+
+.baseline span {
+    display: block;
+}
+
+.baseline span a {
+    color: #f3776b;
+}
+
+.baseline span a:hover {
+    color: #af2f22;
+    text-decoration: underline;
 }
 
 .watson {
