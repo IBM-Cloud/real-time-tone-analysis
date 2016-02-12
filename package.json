@@ -3,7 +3,9 @@
 	"version": "0.0.1",
 	"description": "Analyze the tone of spoken words in real time using Bluemix and Watson",
 	"scripts": {
-		"start": "node app.js"
+		"start": "node app.js",
+    "build": "browserify src/index.js | uglifyjs -nc > public/js/index.js",
+    "watch": "watchify -v -d -o public/js/index.js src/index.js"
 	},
 	"dependencies": {
 		"express": "4.13.x",
@@ -12,6 +14,12 @@
 		"cfenv": "1.0.x",
     "cf-deployment-tracker-client": "0.0.x"
 	},
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "browserify-shim": "^3.8.12",
+    "watchify": "^3.6.1",
+    "uglifyjs": "^2.4.10"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/IBM-Bluemix/real-time-tone-analysis.git"
@@ -19,9 +27,18 @@
   "bugs": {
     "url": "https://github.com/IBM-Bluemix/real-time-tone-analysis/issues"
   },
+  "browserify-shim": {
+    "jquery": "global:jQuery"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
 	"engines": {
 		"node": "0.12.x"
 	},
+  "author": "IBM Corp.",
   "contributors": [
     {
       "name": "Jake Peyser",

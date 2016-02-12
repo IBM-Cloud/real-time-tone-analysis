@@ -8,6 +8,100 @@ html {
     color: #ffffff;
 }
 
+.col-lg-12 {
+  padding: 0px!important;
+}
+.col-md-12 {
+  padding: 0px!important;
+}
+.col-sm-12 {
+  padding: 0px!important;
+}
+
+.navbar {
+  cursor: pointer;
+}
+
+.nav-label {
+  color: white;
+}
+
+.navbar-text {
+  overflow: hidden;
+  white-space: nowrap;
+  margin:0;
+  padding: 0;
+}
+
+.nav-inverse-color {
+  padding: 5px 0;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  float: left;
+}
+
+@media (min-width: 500px) {
+  .nav-inverse-color {
+    width: 50%;
+  }
+}
+
+@media (min-width: 730px) {
+  .nav-inverse-color {
+    width: 33.333%;
+  }
+}
+
+/* numbered bullets solution from: */
+/* http://www.456bereastreet.com/archive/201105/styling_ordered_list_numbers/ */
+ol {
+    counter-reset:li;
+    margin-left:0;
+    padding-left:0;
+    margin-top: 1em;
+}
+ol > li {
+    position:relative;
+    margin: 0 0 6px 2em; /* Make room for numbers */
+    padding: 4px 8px 4px 12px; /* Add some spacing around the content */
+    list-style:none;
+    vertical-align: middle;
+}
+
+ol > li:before {
+    content:counter(li); /* Use the counter as content */
+    counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+    position:absolute;
+    left: -2em;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    width: 2em;
+    margin-right: 8px;
+    padding: 4px;
+    color: #fff;
+    background: #325c80;
+    border-radius: 50%;
+    /* top: 1em; */
+    /* font-weight:bold; */
+    text-align:center;
+}
+
+li ol,
+li ul {margin-top:6px;}
+ol ol li:last-child {margin-bottom:0;}
+
+.row {
+  margin-left: 0px!important;
+  margin-right: 0px!important;
+}
+
+.body-row {
+    width: 100%;
+}
+
 .real-time-body {
     font-family: 'Open Sans', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -53,6 +147,64 @@ a {
     /*    max-width: 606px;*/
     justify-content: center;
     /*    width: 606px;*/
+}
+
+#metadataTable th {
+  padding: 0.5em !important;
+}
+
+#metadataTableBody td {
+  padding: 0 !important;
+}
+
+.alt-hypothesis hr {
+  margin-bottom: 0 !important;
+}
+
+.alt-hypothesis {
+  margin-top: 2em;
+}
+.alt-hypothesis > p {
+  margin-bottom: 0;
+}
+.hypothesis {
+  color: #5a5a5a; /*gray 60*/
+  clear: both;
+  float: left;
+}
+
+.dropdown {
+  width: 135% !important;
+}
+
+#dropdownMenu1 {
+  margin-bottom: 2em;
+}
+
+.error-row {
+  padding-left: 1em;
+  padding-right: 1em;
+  display: none;
+  background-color: #d74108;
+  color: white;
+}
+
+.error-row a {
+  color: white;
+  margin-bottom: 0.2em;
+}
+
+.notification-row {
+  padding-left: 1em;
+  padding-right: 1em;
+  display: none;
+  border-bottom: 2px solid #ececec;
+  background-color: #d74108;
+  color: black;
+}
+.notification-row a {
+  color: black;
+  margin-bottom: 0.2em;
 }
 
 .footer {
@@ -134,6 +286,7 @@ a {
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
+    color: black;
 }
 
 .about {
@@ -184,12 +337,10 @@ a {
     text-decoration: underline;
 }
 
-.watson {
+.footerImage {
     height: 26px;
     padding: 10px;
-}
-
-.bluemix {
-    height: 26px;
-    padding: 10px;
+    box-sizing: initial;
+    -webkit-box-sizing: initial;
+    -moz-box-sizing: initial;
 }

@@ -36,15 +36,13 @@ var appEnv = cfenv.getAppEnv(appEnvOpts);
 
 // Configure Express
 // serve the files out of ./public as our main files
+app.enable('trust proxy');
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(express.static(__dirname + '/public'));
 
 // Deployment tracker code snippet
 require("cf-deployment-tracker-client").track();
-
-// error-handler settings
-require('./config/error-handler')(app);
 
 // Start listening for connections
 app.listen(appEnv.port, function() {
@@ -63,13 +61,17 @@ app.get('/', function(req, res) {
 
 // Get token using your credentials
 app.post('/api/token', function(req, res, next) {
-  authService.getToken({url: config.url}, function(err, token) {
+  console.log("sdfsfds")
+  authService.getToken({url: speechCreds.url}, function(err, token) {
     if (err)
       next(err);
     else
       res.send(token);
   });
 });
+
+// error-handler settings
+require('./config/error-handler')(app);
 
 // Retrieves service credentials for the input service
 function getServiceCreds(appEnv, serviceName) {
