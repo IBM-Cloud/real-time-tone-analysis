@@ -11,7 +11,7 @@ var CONFIG = {
         strokeStyle: 'rgb(120, 119, 130)',
         fillStyle: 'rgb(151, 149, 163)',
         lineWidth: 1,
-        millisPerLine: 250,
+        millisPerLine: 500,
         verticalSections: 6,
     },
     labels: {
@@ -87,28 +87,31 @@ function simulate() {
 
 /* ADDS THE CANVAS AREA */
 
-function addChart() {
+function addCanvas() {
     var container = document.getElementById('container');
     var anchor = document.getElementById('timeline');
-    var canvas = document.createElement('canvas')
-    canvas.width = anchor.parentElement.offsetWidth;
-    canvas.height = 200;
-    canvas.id = CHART_ID
-    anchor.appendChild(canvas);
-    CHART = document.getElementById(CHART_ID)
+    CHART = document.createElement('canvas')
+    CHART.width = anchor.parentElement.offsetWidth;
+    CHART.height = 200;
+    CHART.id = CHART_ID
+    anchor.appendChild(CHART);
+}
+
+/* ADD TIMELINE CHART */
+
+function addLines(chart) {
+    sentiments.forEach(function (item) {
+        TIMELINES[item.sentiment] = new TimeSeries();
+        chart.addTimeSeries(TIMELINES[item.sentiment], item);
+    })
 }
 
 function startTimeLine() {
-    addChart();
-    var smoothie = new SmoothieChart(CONFIG);
-    smoothie.streamTo(CHART);
-
-    sentiments.forEach(function (item) {
-        TIMELINES[item.sentiment] = new TimeSeries();
-        smoothie.addTimeSeries(TIMELINES[item.sentiment], item);
-    })
-
-    simulate()
+    addCanvas();
+    var chart = new SmoothieChart(CONFIG);
+    chart.streamTo(CHART);
+    addLines(chart);
+    simulate();
 }
 
 window.onload = function () {
