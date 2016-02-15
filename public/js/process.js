@@ -1,10 +1,11 @@
-/* CHART CONFIGURATION */
+/* GLOBAL OBJECTS */
+var chart,
+    timelines = [];
 
+/* CHART CONFIGURATION */
 var LINE_WIDTH = 3;
 var CHART_ID = 'toneline';
 var CHART;
-
-var TIMELINES = []
 
 var CONFIG = {
     grid: {
@@ -50,11 +51,11 @@ var sentiments = [{
 
 function plotTone(tone) {
     var date = new Date().getTime()
-    TIMELINES['anger'].append(date, tone.anger * 100);
-    TIMELINES['disgust'].append(date, tone.disgust * 100);
-    TIMELINES['fear'].append(date, tone.fear * 100);
-    TIMELINES['joy'].append(date, tone.joy * 100);
-    TIMELINES['sadness'].append(date, tone.sadness * 100);
+    timelines['anger'].append(date, tone.anger);
+    timelines['disgust'].append(date, tone.disgust);
+    timelines['fear'].append(date, tone.fear);
+    timelines['joy'].append(date, tone.joy);
+    timelines['sadness'].append(date, tone.sadness);
 }
 
 /* JUST FOR TESTING */
@@ -80,7 +81,8 @@ function simulate() {
             sadness: sadness
         }
 
-        plotTone(tone)
+        plotTone(tone);
+        console.log(timelines);
 
     }, 2000);
 }
@@ -101,17 +103,26 @@ function addCanvas() {
 
 function addLines(chart) {
     sentiments.forEach(function (item) {
-        TIMELINES[item.sentiment] = new TimeSeries();
-        chart.addTimeSeries(TIMELINES[item.sentiment], item);
+        timelines[item.sentiment] = new TimeSeries();
+        chart.addTimeSeries(timelines[item.sentiment], item);
     })
 }
 
 function startTimeLine() {
     addCanvas();
-    var chart = new SmoothieChart(CONFIG);
+    chart = new SmoothieChart(CONFIG);
     chart.streamTo(CHART);
     addLines(chart);
-    simulate();
+    //simulate();
+}
+
+// Clears all timelines in the global array
+function clearTimeLines() {
+    for (var tone in timelines) {
+        // Skip loop if the property is from prototype
+        if (!timelines.hasOwnProperty(tone)) continue;
+        timelines[tone].clear();
+    }
 }
 
 window.onload = function () {

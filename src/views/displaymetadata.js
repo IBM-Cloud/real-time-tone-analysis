@@ -179,6 +179,8 @@ exports.showResult = function(msg, baseString, model) {
        }
        baseString += text;
        $('#resultsText').val(baseString);
+       // Invoke tone analysis
+       getToneAnalysis(baseString);
        showMetaData(alternatives[0]);
        // Only show alternatives if we're final
        alternativePrototype.showAlternatives(alternatives);

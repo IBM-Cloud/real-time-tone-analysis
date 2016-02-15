@@ -6,6 +6,8 @@ The project is an experiment that combines the Watson [Speech to Text][speech_se
 
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
 
+![Bluemix Deployments](https://deployment-tracker.mybluemix.net/stats/cd3110eb8720f2a4e4f8c8c53ce934e9/badge.svg)
+
 ![concept](./design/real-time-tone.png)
 
 There are many real world opportunities for combining these services. For example in call centres, offering instant feedback to operators, so that they can measure and control their response, or companies that run call centres to be concsious of repsonse levels over time.

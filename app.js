@@ -37,6 +37,7 @@ var appEnv = cfenv.getAppEnv(appEnvOpts);
 // Configure Express
 // serve the files out of ./public as our main files
 app.enable('trust proxy');
+
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }));
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(express.static(__dirname + '/public'));
@@ -54,6 +55,12 @@ var speechCreds = getServiceCreds(appEnv, 'rtt-speech-to-text');
 speechCreds.version = 'v1';
 var authService = watson.authorization(speechCreds);
 
+// Configure Watson Speech to Text service
+var toneCreds = getServiceCreds(appEnv, 'rtt-tone-analyzer');
+toneCreds.version = 'v3-beta';
+toneCreds.version_date = '2016-11-02';
+var toneAnalyzer = watson.tone_analyzer(toneCreds);
+
 // Root page handler
 app.get('/', function(req, res) {
   res.render('index', { ct: req._csrfToken });
@@ -61,12 +68,21 @@ app.get('/', function(req, res) {
 
 // Get token using your credentials
 app.post('/api/token', function(req, res, next) {
-  console.log("sdfsfds")
   authService.getToken({url: speechCreds.url}, function(err, token) {
     if (err)
       next(err);
     else
       res.send(token);
+  });
+});
+
+// Request handler for tone analysis
+app.post('/api/tone', function(req, res, next) {
+  toneAnalyzer.tone(req.body, function(err, data) {
+    if (err)
+      return next(err);
+    else
+      return res.json(data);
   });
 });
 
