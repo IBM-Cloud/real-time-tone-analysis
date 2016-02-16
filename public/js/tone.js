@@ -26,25 +26,26 @@ function getToneAnalysis(text)  {
  * @param {Object} response data from api
  */
 function toneCallback(data) {
+  var tone = {
+    doc: {},
+    sentence: {}
+  };
+
   // Results for the updated full transcript's tone
-  var docEmotionTone = data.document_tone.tone_categories[0],
-    docWritingTone = data.document_tone.tone_categories[1],
-    docSocialTone = data.document_tone.tone_categories[2];
+  tone.doc.emotion = getToneValues(data.document_tone.tone_categories[0]),
+  tone.doc.writing = getToneValues(data.document_tone.tone_categories[1]),
+  tone.doc.social = getToneValues(data.document_tone.tone_categories[2]);
 
   // Results for the latest sentence's tone
-  var newEmotionTone, newWritingTone, newSocialTone;
   if (data.sentences_tone) {
     var numSentences = data.sentences_tone.length - 1;
-    newEmotionTone = data.sentences_tone[numSentences].tone_categories[0];
-    newWritingTone = data.sentences_tone[numSentences].tone_categories[1];
-    newSocialTone = data.sentences_tone[numSentences].tone_categories[2];
+    tone.sentence.emotion = getToneValues(data.sentences_tone[numSentences].tone_categories[0]);
+    tone.sentence.writing = getToneValues(data.sentences_tone[numSentences].tone_categories[1]);
+    tone.sentence.social = getToneValues(data.sentences_tone[numSentences].tone_categories[2]);
   }
-  else
-    newEmotionTone = docEmotionTone;
 
   // Update Smoothie.js chart
-  if (newEmotionTone)
-    plotTone(getToneValues(newEmotionTone));
+  toneChart.plotTone(tone);
 }
 
 /**

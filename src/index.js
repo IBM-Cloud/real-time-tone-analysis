@@ -82,7 +82,7 @@ $(document).ready(function() {
       $('.notification-row').hide();
       $('.hypotheses > ul').empty();
       $('#metadataTableBody').empty();
-      clearTimeLines();
+      toneChart.clearTimeLines();
     });
 
   });
