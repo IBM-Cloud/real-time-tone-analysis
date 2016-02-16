@@ -1,4 +1,13 @@
 /**
+ * AJAX Post request for tone analyzer api
+ * @param {String} request body text
+ */
+function getToneAnalysis(text)  {
+  $.post('/api/tone', {'text': text }, toneCallback)
+    .fail(err);
+}
+
+/**
  * Converts a tone category into a flat object with tone values
  * @param {Object} tone category returned from API
  */
@@ -10,15 +19,6 @@ function getToneValues(tone_category) {
     tone[tone_category.tones[i].tone_id] = +((tone_category.tones[i].score * 100).toFixed(2));
 
   return tone;
-}
-
-/**
- * AJAX Post request for tone analyzer api
- * @param {String} request body text
- */
-function getToneAnalysis(text)  {
-  $.post('/api/tone', {'text': text }, toneCallback)
-    .fail(err);
 }
 
 /**

@@ -5,6 +5,13 @@
        WRITING = 'writing',
        SOCIAL = 'social';
 
+    // Tone Timeline Style Constants
+    var LINE_WIDTH = 3,
+        EMOTION_TONES = ['anger', 'disgust', 'fear', 'joy', 'sadness'],
+        WRITING_TONES = ['analytical', 'confident', 'tentative'],
+        SOCIAL_TONES = ['openness_big5', 'conscientiousness_big5', 'extraversion_big5', 'agreeableness_big5', 'neuroticism_big5'],
+        TIMELINES_STYLES = [[221,65,49],[1,79,131],[123,194,83],[249,223,60],[144,167,207]];
+
     // TODO: Replace with jquery version
     var Util = {
         extend: function () {
@@ -82,18 +89,26 @@
     }
 
     /**
-     * Adds lines to the chart
-     * @param {Object} optional sentiments configs for the new lines
+     * Adds tone timelines to the chart
      */
-    Chart.prototype.addLines = function (sentiments) {
-        var sentimentString;
-        var newSentiments = Util.extend({}, Chart.defaultSentiments, sentiments);
-        for (var sentiment in newSentiments) {
-            // Skip loop if the property is from prototype
-            if (!newSentiments.hasOwnProperty(sentiment)) continue;
-            sentimentString = newSentiments[sentiment].sentiment;
-            this.timelines[sentimentString] = new TimeSeries();
-            this.chart.addTimeSeries(this.timelines[sentimentString], newSentiments[sentiment]);
+    Chart.prototype.addTimeLines = function () {
+        // Get tones corresponding to current type
+        var tones;
+        if (this.type === EMOTION) tones = EMOTION_TONES;
+        else if (this.type === WRITING) tones = WRITING_TONES;
+        else if (this.type === SOCIAL) tones = SOCIAL_TONES;
+
+        // Create a timeline for each tone
+        var sentiment;
+        for (var i=0; i < tones.length; i++) {
+            this.timelines[tones[i]] = new TimeSeries();
+            sentiment = {
+                sentiment: tones[i],
+                strokeStyle: ('rgb('+TIMELINES_STYLES[i][0]+','+TIMELINES_STYLES[i][1]+','+TIMELINES_STYLES[i][2]+')'),
+                fillStyle: ('rgba('+TIMELINES_STYLES[i][0]+','+TIMELINES_STYLES[i][1]+','+TIMELINES_STYLES[i][2]+',0.0)'),
+                lineWidth: LINE_WIDTH
+            };
+            this.chart.addTimeSeries(this.timelines[tones[i]], sentiment);
         }
     };
 
@@ -101,7 +116,6 @@
      * Appends new plot points for the timelines
      * @param {Object} holds the doc and sentence tone for all types
      */
-     // TODO: Make extensible for other writing and social tone types
     Chart.prototype.plotTone = function (tone) {
         // Get the object representing the level of tone we are charting
         // If tracking sentence level and not present, return
@@ -114,23 +128,24 @@
             levelTone = tone.sentence;
 
         // Get the object representing the type of tone we are charting
-        var subTone;
-        if (this.type === EMOTION)
+        var subTone, tones;
+        if (this.type === EMOTION) {
             subTone = levelTone.emotion;
-        else if (this.type === WRITING)
+            tones = EMOTION_TONES;
+        }
+        else if (this.type === WRITING) {
             subTone = levelTone.writing;
-        else if (this.type === SOCIAL)
+            tones = WRITING_TONES;
+        }
+        else if (this.type === SOCIAL) {
             subTone = levelTone.social;
+            tones = SOCIAL_TONES;
+        }
 
         // Append new values to the respective tone timeline
         var date = new Date().getTime()
-        if (this.type === EMOTION) {
-            this.timelines['anger'].append(date, subTone.anger);
-            this.timelines['disgust'].append(date, subTone.disgust);
-            this.timelines['fear'].append(date, subTone.fear);
-            this.timelines['joy'].append(date, subTone.joy);
-            this.timelines['sadness'].append(date, subTone.sadness);
-        }
+        for (var tone in tones)
+            this.timelines[tones[tone]].append(date, subTone[tones[tone]]);
     };
 
     /**
@@ -139,6 +154,7 @@
      */
     Chart.prototype.toggleToneLevel = function (newLevel) {
         this.level = newLevel;
+        this.clearTimeLines();
         var levelString = (newLevel) ? "doc" : "sentence";
         console.log("Now tracking", levelString, "level tone");
     };
@@ -149,9 +165,12 @@
      */
     Chart.prototype.toggleToneType = function (newType) {
         // Only accept valid type
-        if (type === EMOTION || type === WRITING || type === SOCIAL) {
-            this.type = type;
-            console.log("Now tracking", type, "tone");
+        if (newType === EMOTION || newType === WRITING || newType === SOCIAL) {
+            this.type = newType;
+            console.log("Now tracking", newType, "tone");
+
+            this.removeTimeLines();
+            this.addTimeLines();
         }
         else
             console.error("Attempted to change to invalid tone type");
@@ -168,40 +187,13 @@
         }
     };
 
-    // Default configuration settings for chart's canvas
-    // TODO: Make extensible for other writing and social tone types
-    var LINE_WIDTH = 3;
-    Chart.defaultSentiments = [{
-            sentiment: 'anger',
-            strokeStyle: 'rgb(221, 65, 49)',
-            fillStyle: 'rgba(221, 65, 49, 0.0)',
-            lineWidth: LINE_WIDTH
-        },
-        {
-            sentiment: 'disgust',
-            strokeStyle: 'rgb(1, 79, 131)',
-            fillStyle: 'rgba(1, 79, 131, 0.0)',
-            lineWidth: LINE_WIDTH
-        },
-        {
-            sentiment: 'fear',
-            strokeStyle: 'rgb(123, 194, 83)',
-            fillStyle: 'rgba(123, 194, 83, 0.0)',
-            lineWidth: LINE_WIDTH
-        },
-        {
-            sentiment: 'joy',
-            strokeStyle: 'rgb(249, 223, 60)',
-            fillStyle: 'rgba(249, 223, 60, 0.0)',
-            lineWidth: LINE_WIDTH
-        },
-        {
-            sentiment: 'sadness',
-            strokeStyle: 'rgb(144, 167, 207)',
-            fillStyle: 'rgba(144, 167, 207, 0.0)',
-            lineWidth: LINE_WIDTH
-        }
-    ]
+    /**
+     * Removes all timelines currently in the chart
+     */
+    Chart.prototype.removeTimeLines = function () {
+        this.clearTimeLines();
+        this.timelines = [];
+    };
 
     exports.Chart = Chart;
 
