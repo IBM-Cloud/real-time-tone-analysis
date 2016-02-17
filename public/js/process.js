@@ -1,5 +1,4 @@
 var toneChart;
-var tone;
 window.onload = function () {
     toneChart = new Chart('toneline', 'timeline', false, 'emotion');
     toneChart.addTimeLines();
@@ -20,7 +19,7 @@ function simulate() {
         var sadness = Math.floor(Math.random() * (max - joy - anger - fear - min + 1) + min);
 
         // Create dummy tone object
-        tone = {
+        var tone = {
             doc: {
                 emotion: {
                     anger: anger,

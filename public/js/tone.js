@@ -1,3 +1,4 @@
+var lastToneResult = {};
 /**
  * AJAX Post request for tone analyzer api
  * @param {String} request body text
@@ -43,6 +44,9 @@ function toneCallback(data) {
     tone.sentence.writing = getToneValues(data.sentences_tone[numSentences].tone_categories[1]);
     tone.sentence.social = getToneValues(data.sentences_tone[numSentences].tone_categories[2]);
   }
+
+  //Save the last result from TA
+  lastToneResult = tone;
 
   // Update Smoothie.js chart
   toneChart.plotTone(tone);

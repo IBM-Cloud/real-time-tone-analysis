@@ -1,7 +1,7 @@
 //Fill out the fields in the Save form
 function prepareDataForSave(){
 	//Get last tone data.
-	$("#jsonToSave").val(JSON.stringify(tone.doc.emotion, null, ' '));
+	$("#jsonToSave").val(JSON.stringify(lastToneResult.doc, null, ' '));
 	
 	//Get text
 	$("#textToSave").val($("#resultsText").val());
