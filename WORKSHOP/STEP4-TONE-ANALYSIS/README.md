@@ -103,7 +103,7 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
 3. Now that we've made changes to `src/`, we need to rebuild our `public/js/index.js` file. Rerun the browserify build
 
   ```
-  npm run build
+  $ npm run build
   ```
 
 4. Update `vcap-local.json` with the new tone analyzer service
