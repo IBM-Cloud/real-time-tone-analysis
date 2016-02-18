@@ -40,9 +40,11 @@ function toneCallback(data) {
   // Results for the latest sentence's tone
   if (data.sentences_tone) {
     var numSentences = data.sentences_tone.length - 1;
-    tone.sentence.emotion = getToneValues(data.sentences_tone[numSentences].tone_categories[0]);
-    tone.sentence.writing = getToneValues(data.sentences_tone[numSentences].tone_categories[1]);
-    tone.sentence.social = getToneValues(data.sentences_tone[numSentences].tone_categories[2]);
+    if (data.sentences_tone[numSentences].tone_categories.length) {
+      tone.sentence.emotion = getToneValues(data.sentences_tone[numSentences].tone_categories[0]);
+      tone.sentence.writing = getToneValues(data.sentences_tone[numSentences].tone_categories[1]);
+      tone.sentence.social = getToneValues(data.sentences_tone[numSentences].tone_categories[2]);
+    }
   }
 
   //Save the last result from TA
