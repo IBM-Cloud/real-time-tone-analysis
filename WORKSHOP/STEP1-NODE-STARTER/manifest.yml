@@ -1,8 +1,8 @@
 applications:
-- path: .
+- name: realtime-tone
+  host: realtime-tone-USERNAME
   memory: 256M
   instances: 1
-  domain: mybluemix.net
-  name: sterling
-  host: sterling
+  path: .
+  command: node app.js
   disk_quota: 1024M

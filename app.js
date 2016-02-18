@@ -20,7 +20,6 @@ var express   = require('express'),
   app         = express(),
   bodyParser  = require('body-parser'),
   cfenv       = require('cfenv'),
-  extend      = require('util')._extend,
   watson      = require('watson-developer-cloud');
 
 // Set up environment variables

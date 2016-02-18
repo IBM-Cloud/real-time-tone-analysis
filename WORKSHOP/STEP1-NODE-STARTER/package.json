@@ -1,16 +1,16 @@
 {
-	"name": "NodejsStarterApp",
-	"version": "0.0.1",
-    "private": true,
-	"scripts": {
-		"start": "node app.js"
-	},
-	"dependencies": {
-		"express": "4.13.x",
-		"cfenv": "1.0.x"
-	},
-	"repository": {},
-	"engines": {
-		"node": "4.2.x"
-	} 
+  "name": "realtime-tone",
+  "version": "0.0.1",
+  "description": "Analyze the tone of spoken words in real time using Bluemix and Watson",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "body-parser": "1.14.x",
+    "cfenv": "1.0.x",
+    "express": "4.13.x"
+  },
+  "engines": {
+    "node": "0.12.x"
+  }
 }
