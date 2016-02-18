@@ -218,7 +218,7 @@ Our transcripts are now being saved to the database. Easy enough, right? This pa
 
 ## Microservices
 
-Talk about why use this architecture, blah blah blah.
+So now our application is actually 2 separate applications. Each with its own code base, data, delivery process and endpoint. This pattern is called Microservices. The concept is simple - break your application into multiple independent applications, each with a clear purpose. The applications talk to each other using HTTP over REST or a message queue. Each of these applications can be written in whatever language is best for its job. Developers and IDEs are happy because they are working with a smaller code base and they have more flexibility to make changes to their more manageable application. Each application can be monitored, scaled or updated independently to match demands.
 
 <!--Links-->
 [cloudant_url]: https://cloudant.com/
