@@ -140,9 +140,69 @@ Your API Explorer API at `http://cloudantAPI-USERNAME.mybluemix.net/explorer`
 
 Let's update our `realtime-tone` app now so that it leverages this new Cloudant DB API. When you click the `Save` button, we want it to call our Loopback API with the data we want to save.
 
-1. Create a file called `save.js` which handles saving the Speech to Text results for the session.
+1. Update `public/index.html` with a modal view for viewing Speech to Text results before we save.
 
-2. Update the POST call in `save.js` to call your new API:
+	```
+	<div id="myModal" class="modal fade" role="dialog">
+	  <div class="modal-dialog">
+	
+	    <!-- Modal content-->
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal">&times;</button>
+	        <h4 class="modal-title">Save to API</h4>
+	      </div>
+	      <div class="modal-body">
+	
+	        <div class="form-group">
+	          <label for="usr">Name:</label>
+	          <input type="text" class="form-control" id="nameToSave" value = "John Doe">
+	        </div>
+	
+	        <div class="form-group">
+	          <label for="usr">Text:</label>
+	            <textarea class="form-control" style = "height:100px" readonly id="textToSave" dir="auto"></textarea>
+	        </div>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-success" onclick = "saveData()">Save</button>
+	      </div>
+	    </div>
+	
+	  </div>
+	</div>
+	```
+
+2. Create a file called `public/js/save.js` which handles saving the Speech to Text results for the session
+	
+	```
+	//Fill out the fields in the Save form
+	function prepareDataForSave(){
+		//Get text
+		$("#textToSave").val($("#resultsText").val());
+	}
+	
+	//Send the data to the API.
+	function saveData(){
+		var dataToSend = {};
+	
+		//Get data from Save form
+		dataToSend.name = $("#nameToSave").val();
+		dataToSend.text = $("#textToSave").val();
+	
+		//POST request to API
+		$.post( "http://nodejsloopbackapi.mybluemix.net/api/items", dataToSend,function( data ) {
+		  console.log("Save result:", data );
+		}).fail(function() {
+	    alert( "Error saving data" );
+	  	});
+	
+	    //Close the Save window
+	    $('#myModal').modal('hide');
+	}
+	```
+
+	Update the POST call in `public/js/save.js` to call your new API:
 
 	```
 	$.post( "http://cloudantAPI-USERNAME.mybluemix.net/api/Items", dataToSend,function( data ) {
@@ -152,7 +212,7 @@ Let's update our `realtime-tone` app now so that it leverages this new Cloudant 
 
 4. Make a GET (go to it in your browser) to `http://cloudantAPI-USERNAME.mybluemix.net/api/Items` to ensure everything is working.
 
-5. Push the updated realtime app back to Bluemix
+5. Push the updated `realtime-tone` app back to Bluemix
 
 Our transcripts are now being saved to the database. Easy enough, right? This pattern is extremely useful when building applications where encapsulation and reusability are priorities. Let's discuss this in (a little) more depth.
 
