@@ -1,29 +1,29 @@
 {
-   "services": {
-      "speech_to_text": [
-        {
-           "name": "rtt-speech-to-text",
-           "label": "speech_to_text",
-           "plan": "standard",
-           "credentials": {
-              "url": "https://stream.watsonplatform.net/speech-to-text/api",
-              "username": "USERNAME",
-              "password": "PASSWORD"
-           }
+    "services": {
+        "speech_to_text": [
+            {
+                "name": "rtt-speech-to-text",
+                "label": "speech_to_text",
+                "plan": "standard",
+                "credentials": {
+                    "url": "https://stream.watsonplatform.net/speech-to-text/api",
+                    "username": "ddd65e96-37b2-4890-bf4e-043c138121c0",
+                    "password": "EKl5K35ZGdso"
+                }
         }
      ],
-     "tone_analyzer": [
-        {
-           "name": "rtt-tone-analyzer",
-           "label": "tone_analyzer",
-           "plan": "beta",
-           "credentials": {
-              "url": "https://gateway.watsonplatform.net/tone-analyzer-beta/api",
-              "isStreaming": false,
-              "username": "USERNAME",
-              "password": "PASSWORD"
-           }
+        "tone_analyzer": [
+            {
+                "name": "rtt-tone-analyzer",
+                "label": "tone_analyzer",
+                "plan": "beta",
+                "credentials": {
+                    "url": "https://gateway.watsonplatform.net/tone-analyzer-beta/api",
+                    "isStreaming": false,
+                    "username": "3de59853-1f7a-4751-be11-64694a1483eb",
+                    "password": "XXT7BfwjP9Ba"
+                }
         }
      ]
-   }
+    }
 }
