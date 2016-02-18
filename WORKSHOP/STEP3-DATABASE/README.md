@@ -1,6 +1,6 @@
 # Step 3: Creating a Database API
 
-We have our base working app at this point. We have a Node.js back end running on Bluemix, a stylized front end which handles client-side interaction, and Watson SaaS to help us transcribe the user's speech. However we are missing a core component of any application: the datastore. Right now, our transcripts are dissapearing into the ether after every session. This step will lay out how easy it is to not only create a database on Bluemix, but to interface with it by wrapping it in a [Loopback API][loopback_url].
+We have our base aplication working at this point. We have a Node.js back end running on Bluemix, a stylized front end which handles client-side interaction, and Watson SaaS to help us transcribe the user's speech. However we are missing a core component of any application: the datastore. We need to be able to persist dat. Right now, our transcripts are dissapearing into the ether after every session. This step will lay out how easy it is to not only create a database on Bluemix, but to interface with it by wrapping it in a simple RESTful [Loopback API][loopback_url].
 
 ## Creating the Loopback API
 
@@ -10,7 +10,7 @@ We have our base working app at this point. We have a Node.js back end running o
 	npm install -g strongloop
 	```
 
-2. Run this command to start the API creation process
+2. Run this command to start the API creation wizard
 
 	```
 	slc loopback
@@ -123,7 +123,7 @@ Your API Explorer API at `http://0.0.0.0:3000/explorer`
 	echo node_modules >> .cfignore
 	```
 
-2. Then, push to Bluemix, but don't start the app yet
+2. Then, push the application to Bluemix, but don't start the app yet
 
 	```
 	cf push cloudantAPI-USERNAME --no-start
@@ -131,14 +131,14 @@ Your API Explorer API at `http://0.0.0.0:3000/explorer`
 	
 	If we tried to start the app now, it would fail since it needs a bound Cloudant database.
 
-3. Go to your new app's dashbaord and click on `Bind a Service`, choose the Cloudant database you created earlier. You'll be prompoted to restage. Click Yes. After that completes:
+3. Go to your new app's dashbaord and click on `Bind a Service`, choose the Cloudant database you created earlier. You'll be prompoted to restage. Click Yes. After that completes (about a minute):
 
 Your REST API is available at `http://cloudantAPI-USERNAME.mybluemix.net/api/Items`  
 Your API Explorer API at `http://cloudantAPI-USERNAME.mybluemix.net/explorer`
 
 ## Update your app for saving
 
-Let's update our `realtime-tone` app now so that it leverages this new Cloudant DB API.
+Let's update our `realtime-tone` app now so that it leverages this new Cloudant DB API. When you click the `Save` button, we want it to call our Loopback API with the data we want to save.
 
 1. Create a file called `save.js` which handles saving the Speech to Text results for the session.
 
@@ -150,9 +150,9 @@ Let's update our `realtime-tone` app now so that it leverages this new Cloudant 
 
 3. Test the app locally
 
-4. Make a GET to `http://cloudantAPI-USERNAME.mybluemix.net/api/Items` to ensure everything is working.
+4. Make a GET (go to it in your browser) to `http://cloudantAPI-USERNAME.mybluemix.net/api/Items` to ensure everything is working.
 
-5. Push the app back to Bluemix
+5. Push the updated realtime app back to Bluemix
 
 Our transcripts are now being saved to the database. Easy enough, right? This pattern is extremely useful when building applications where encapsulation and reusability are priorities. Let's discuss this in (a little) more depth.
 
