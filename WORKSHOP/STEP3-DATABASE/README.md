@@ -243,7 +243,11 @@ Our transcripts are now being saved to the database. Easy enough, right? This pa
 
 ## Microservices
 
-So now our application is actually 2 separate applications. Each with its own code base, data, delivery process and endpoint. This pattern is called Microservices. The concept is simple - break your application into multiple independent applications, each with a clear purpose. The applications talk to each other using HTTP over REST or a message queue. Each of these applications can be written in whatever language is best for its job. Developers and IDEs are happy because they are working with a smaller code base and they have more flexibility to make changes to their more manageable application. Each application can be monitored, scaled or updated independently to match demands.
+Now our application is actually two separate applications. Each with its own code base, delivery process, and endpoint. This implementation pattern is known as microservice architecture. 
+
+The concept is simple - break your application into multiple independent applications, each with a clear purpose. The applications talk to each other using HTTP over REST or a message queue. Each of these applications can be written in whatever language is best for its job. Developers and IDEs are happy because they are working with a smaller code base and they have more flexibility to make changes to their more manageable application. Each application can be monitored, scaled, or updated independently to match demands. Fault isolation and tolerance improves as well.
+
+This is only small list of advantages of this architectural approach. For more info on this subject, I recommend Chris Richardson's website [http://plainoldobjects.com/](http://plainoldobjects.com/) - Chris is one of the founders of the original Cloud Foundry and is currently a consultant specializing in microservices.
 
 <!--Links-->
 [cloudant_url]: https://cloudant.com/

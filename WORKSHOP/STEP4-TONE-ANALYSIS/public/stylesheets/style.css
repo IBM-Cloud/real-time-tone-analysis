@@ -1,0 +1,350 @@
+body,
+html {
+    background-color: #fef9f9;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    color: #ffffff;
+}
+
+.col-lg-12 {
+  padding: 0px!important;
+}
+.col-md-12 {
+  padding: 0px!important;
+}
+.col-sm-12 {
+  padding: 0px!important;
+}
+
+.navbar {
+  cursor: pointer;
+}
+
+.nav-label {
+  color: white;
+}
+
+.navbar-text {
+  overflow: hidden;
+  white-space: nowrap;
+  margin:0;
+  padding: 0;
+}
+
+.nav-inverse-color {
+  padding: 5px 0;
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  float: left;
+}
+
+@media (min-width: 500px) {
+  .nav-inverse-color {
+    width: 50%;
+  }
+}
+
+@media (min-width: 730px) {
+  .nav-inverse-color {
+    width: 25%;
+  }
+}
+
+.audioParent {
+  margin-top: 10px;
+}
+
+/* numbered bullets solution from: */
+/* http://www.456bereastreet.com/archive/201105/styling_ordered_list_numbers/ */
+ol {
+    counter-reset:li;
+    margin-left:0;
+    padding-left:0;
+    margin-top: 1em;
+}
+ol > li {
+    position:relative;
+    margin: 0 0 6px 2em; /* Make room for numbers */
+    padding: 4px 8px 4px 12px; /* Add some spacing around the content */
+    list-style:none;
+    vertical-align: middle;
+}
+
+ol > li:before {
+    content:counter(li); /* Use the counter as content */
+    counter-increment:li; /* Increment the counter by 1 */
+    /* Position and style the number */
+    position:absolute;
+    left: -2em;
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+    width: 2em;
+    margin-right: 8px;
+    padding: 4px;
+    color: #fff;
+    background: #325c80;
+    border-radius: 50%;
+    /* top: 1em; */
+    /* font-weight:bold; */
+    text-align:center;
+}
+
+li ol,
+li ul {margin-top:6px;}
+ol ol li:last-child {margin-bottom:0;}
+
+.row {
+  margin-left: 0px!important;
+  margin-right: 0px!important;
+}
+
+.body-row {
+    width: 100%;
+}
+
+.real-time-body {
+    font-family: 'Open Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.top {
+    margin: 0;
+    padding: 0;
+    background: #dd4131;
+    height: 100px;
+    border-bottom: 4px solid #f3776b;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+.name {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 2px;
+    font-weight: bold;
+}
+
+.title {
+    display: flex;
+    flex: 2 0 0;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+a {
+    text-decoration: none;
+}
+
+.bar {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-direction: row;
+    /*    max-width: 606px;*/
+    justify-content: center;
+    /*    width: 606px;*/
+}
+
+#metadataTable th {
+  padding: 0.5em !important;
+}
+
+#metadataTableBody td {
+  padding: 0 !important;
+}
+
+.alt-hypothesis hr {
+  margin-bottom: 0 !important;
+}
+
+.alt-hypothesis {
+  margin-top: 2em;
+}
+.alt-hypothesis > p {
+  margin-bottom: 0;
+}
+.hypothesis {
+  color: #5a5a5a; /*gray 60*/
+  clear: both;
+  float: left;
+}
+
+.dropdown {
+  width: 135% !important;
+}
+
+#dropdownMenu1 {
+  margin-bottom: 2em;
+}
+
+.error-row {
+  padding-left: 1em;
+  padding-right: 1em;
+  display: none;
+  background-color: #d74108;
+  color: white;
+}
+
+.error-row a {
+  color: white;
+  margin-bottom: 0.2em;
+}
+
+.notification-row {
+  padding-left: 1em;
+  padding-right: 1em;
+  display: none;
+  border-bottom: 2px solid #ececec;
+  background-color: #d74108;
+  color: black;
+}
+.notification-row a {
+  color: black;
+  margin-bottom: 0.2em;
+}
+
+.footer {
+    position: fixed;
+    display: flex;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    margin: 0;
+    background: #ffffff;
+    align-content: center;
+    border-top: 1px solid #f6cac9;
+}
+
+.footer-container {
+    text-decoration: none;
+    flex-flow: row wrap;
+    flex-wrap: wrap;
+    display: flex;
+    padding: 0;
+    width: 606px;
+    margin: 0 auto -30px;
+    max-width: 606px;
+    font-size: 12px;
+    color: rgb(43, 63, 86);
+    height: 60px;
+    align-content: center;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.site {
+    -webkit-box-align: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    border: 0 solid #000;
+    box-sizing: border-box;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-shrink: 0;
+    -ms-flex-negative: 0;
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    margin: 0 auto -30px;
+    max-width: 612px;
+}
+
+.copyright {
+    display: flex;
+    flex: 2 0 0;
+}
+
+.footer-github {
+    display: flex;
+    flex: 1 0 0;
+    flex-direction: row;
+    justify-content: flex-end;
+    font-size: 16px;
+    color: #4d4d4d;
+}
+
+.container {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: row;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    color: black;
+}
+
+.about {
+    color: #f3776b;
+    align-self: center;
+    align-content: center;
+    display: flex;
+    font-size: 14px;
+    width: 300px;
+    text-align: center;
+    padding: 50px;
+}
+
+.speak {
+    align-self: center;
+    align-content: center;
+    display: flex;
+    border-radius: 200px;
+    background: white;
+    border: 4px solid #f3776b;
+}
+
+.label {
+    color: #dd4131;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 20px;
+    display: flex;
+    align-self: center;
+}
+
+.baseline {
+    color: #f3776b;
+    padding: 10px;
+    text-align: center;
+}
+
+.baseline span {
+    display: block;
+}
+
+.baseline span a {
+    color: #f3776b;
+}
+
+.baseline span a:hover {
+    color: #af2f22;
+    text-decoration: underline;
+}
+
+.footerImage {
+    height: 26px;
+    padding: 10px;
+    box-sizing: initial;
+    -webkit-box-sizing: initial;
+    -moz-box-sizing: initial;
+}

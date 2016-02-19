@@ -1,0 +1,6 @@
+*.log
+node_modules/
+src/
+myLoopbackAPI/
+.DS_STORE
+README.md

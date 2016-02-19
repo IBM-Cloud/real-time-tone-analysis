@@ -22,7 +22,27 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
 
 ## Implementing Tone Analysis
 
-1. Create a file called `public/js/tone.js` and populate it with the following code
+1. First, we need to update [`app.js`](./app.js) with routes to handle requests for tone analysis
+
+	```
+	// Configure Watson Speech to Text service
+	var toneCreds = getServiceCreds(appEnv, 'rtt-tone-analyzer');
+	toneCreds.version = 'v3-beta';
+	toneCreds.version_date = '2016-11-02';
+	var toneAnalyzer = watson.tone_analyzer(toneCreds);
+	
+	// Request handler for tone analysis
+	app.post('/api/tone', function(req, res, next) {
+	  toneAnalyzer.tone(req.body, function(err, data) {
+	    if (err)
+	      return next(err);
+	    else
+	      return res.json(data);
+	  });
+	});
+	```
+
+2. Create a file called [`public/js/tone.js`](./public/js/tone.js) and populate it with the following code
 
 	```
 	/**
@@ -90,7 +110,13 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
 	```
 	Calling the `getToneAnalysis()` method will invoke the Tone Analyzer service and get back document and sentence level tone for the input text. We then take the response and parse out the overall document and last sentence's tone and print it to the console.
 
-2. To invoke all this code, we need to intercept the text outputs from the Watson Speech to Text service so that we can pass those to the Tone Analyzer service. We will have to make some edits to the files in the `src/views/displaymetadata.js` folder to do this.
+3. Update [`public/indes.html`](./public/index.html) to call this new script
+
+	```
+    <script type="text/javascript" src="js/tone.js"></script>
+	```
+
+4. To invoke all this code, we need to intercept the text outputs from the Watson Speech to Text service so that we can pass those to the Tone Analyzer service. We will have to make some edits to the files in the [`src/views/displaymetadata.js`](./src/views/displaymetadata.js) folder to do this.
 
 	```
 	// Call tone analysis in showResult()
@@ -100,13 +126,13 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
    ```
    Around line 181, insert the `getToneAnalysis()` method with `baseString` as the input. By placing this call here, we only invoke tone analysis on a final result message from Watson. This means that we will only send Watson our StT results after every sentence.
    
-3. Now that we've made changes to `src/`, we need to rebuild our `public/js/index.js` file. Rerun the browserify build
+5. Now that we've made changes to `src/`, we need to rebuild our `public/js/index.js` file. Rerun the browserify build
 
   ```
   $ npm run build
   ```
 
-4. Update `vcap-local.json` with the new tone analyzer service
+6. Update [`vcap-local.json`](./vcap-local.json) with the new tone analyzer service
 
 	```
 	"tone_analyzer": [
@@ -129,13 +155,13 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
 	$ cf env realtime-tone
 	```
 
-5. Test locally
+7. Test locally
 
 Great! We're now analyzing the text coming back from the Speech to text service. We'll want to save the tone analysis results that along with the output text. Let's make some updates for that.
 
 ## Saving the Tone Analysis
 
-1. Update `public/index.html` to include a field for the tone analysis JSON
+1. Update `public/index.html` to include a field for the tone analysis JSON in the save modal
 
 	```
 	<div class="form-group">
@@ -173,8 +199,22 @@ We are now successfully transcripting the user's speech, analayzing their tone, 
 
 ## Watson Patterns
 
-Talk about Watson patterns, yada yada yada.
+We talk a lot about Watson over at IBM. Those of us in the developer community, even moreso. That is because Watson is trying to bridge the gap between machine learning technologies and web app development.
+
+What makes this a possibility is the Watson Developer Cloud. Every API has a unique use case where it might be used in a real world situation. However, the true power of the APIs comes to fruition when you start to use them in conjunction. For example, Speech to Text is useful in isolation, but when you combine it with [Language Translation][lt_url] and [Text to Speech][tts_url], you have a ready-made real-time translation system. All without understanding natural language processing or complex translation models.
+
+We have also seen companies using Watson services to create their own smart chat bots. By combining the [Natural Language Classifier][nlc_url] with the [Dialog][d_url] and [Retrieve and Rank][rar_url] services, we are able to better understand natural language questions posed by users and serve them the resources most relevant to their query. This method is shown to have a much higher accuracy rate than traditional search.
+
+You can play with and check out the source code for some of these pattern examples in the [Watson Sample App Gallery][watson_gallery_url]. You might even see Real Time Tone Analysis there sometime soon...
+
+Next, we enter the last phase of this workshop - using the tone analysis results in the UI...
 
 <!--Links--> 
 [ta_url]: https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tone-analyzer.html
+[lt_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/language-translation.html
+[tts_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech.html
+[nlc_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/nl-classifier.html
+[d_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/dialog.html
+[rar_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/retrieve-rank.html
+[watson_gallery_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/gallery.html
 
