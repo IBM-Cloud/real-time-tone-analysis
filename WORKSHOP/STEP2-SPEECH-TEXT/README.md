@@ -155,9 +155,11 @@ Now that we understand what Watson does and have seen several use cases, let's s
 ## Developing Locally with VCAP_SERVICES
 Now, you're probably wondering if we are going to insert credentials into the app.js, but we don't want to hard-code the credentials for the Speech to Text API directly into our `app.js` file. This is obviously not a good practice when developing our apps, particularly when it comes to source code management.
 
-Since these credentials will be accessible as environment variables when the app is running on Bluemix, we want to emulate this behavior locally. To create this environment parity between Bluemix and our local machines, we will use the `cfenv` Node.js package.
+When running in Bluemix, the credentials of any services that are bound to the application are passed in via the VCAP_SERVICES environement variable. Since these credentials will be accessible as environment variables when the app is running on Bluemix, we want to emulate this behavior when running locally. To create this environment parity between Bluemix and our local machines, we will use the `cfenv` Node.js package.
 
-1. Create the [`vcap-local.json`](./vcap-local.json) file
+1. Create an empty vcap-local.json file.
+
+2. Go to your Bluemix application dashbaord, click on Environment Variables, and then VCAP_SERVICES. Copy this json to your vcap-local.json file. It should look something like this:
 
 	```
 	{
@@ -178,7 +180,7 @@ Since these credentials will be accessible as environment variables when the app
 	}
 	```
 
-2. Update [`app.js`](./app.js) to read from the `vcap-local.json` file for the `cfenv` module configuration
+3. Update [`app.js`](./app.js) to read from the `vcap-local.json` file for the `cfenv` module configuration
 
 	```
 	// cfenv provides access to your Cloud Foundry environment
