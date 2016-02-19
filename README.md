@@ -4,29 +4,17 @@ Real Time Tone Analysis samples dictation or conversations and displays a workin
 
 The project is an experiment that combines the Watson [Speech to Text][speech_service_url] and [Tone Analysis][tone_service_url] services, integrating them in a node.js backend running on [IBM Bluemix][bluemix_url].
 
+![concept](./design/real-time-tone.png)
+
 [![Deploy to Bluemix](https://bluemix.net/deploy/button.png)](https://bluemix.net/deploy)
 
 ![Bluemix Deployments](https://deployment-tracker.mybluemix.net/stats/cd3110eb8720f2a4e4f8c8c53ce934e9/badge.svg)
 
-![concept](./design/real-time-tone.png)
-
-There are many real world opportunities for combining these services. For example in call centres, offering instant feedback to operators, so that they can measure and control their response, or companies that run call centres to be concsious of repsonse levels over time.
+There are many real world opportunities for combining these services. For example in call centers, offering instant feedback to operators, so that they can measure and control their response, or companies that run call centres to be concsious of repsonse levels over time.
 
 The same combination of technology might be used personally to help an individual learn about their engagement and responses and manage it for themselves. This becomes especially interesting when tying the technology to other data sources, for example health data.
 
-![concept](./design/realtime-tone-concept.png)
-
 Health organizations, or insurance companies might encourage individuals to manage their emotions in connection with physical health - imagine being able to understand how an emotional conversation affects your pulse or blood pressure - and how health connected devices could feedback stimulus to help you be aware of that and manage it.
-
-## Flow
-
-The app opens with a simple scene - a button to begin analyzing dictation or conversation ...
-
-![concept](./design/scene-1.png)
-
-Clicking the button leads to a simple dashboard that displays the spoken words, and periodically displays a snapshot of the current tone analyis, as well as a timeline of a running tone analyis ...
-
-![concept](./design/scene-2.png)
 
 ## Running the app on Bluemix
 
