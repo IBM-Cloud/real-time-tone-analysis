@@ -209,7 +209,7 @@ Since these credentials will be accessible as environment variables when the app
 	}
 	```
 
-3. Update your [`.cfignore`](./.cfignore) file to inclue `vcap-local.json` and the `src/` folder
+3. Update your [`.cfignore`](./.cfignore) file to include `vcap-local.json` and the `src/` folder
 
 Now that we have our first service connected, we will next walk through hooking up our app to a database...
 
