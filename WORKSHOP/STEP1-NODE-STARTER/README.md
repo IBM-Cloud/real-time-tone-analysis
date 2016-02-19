@@ -14,15 +14,19 @@ The following are our goals for you, the developer, to achieve by the end of thi
 
 ## Let's get started
 
-1. Create a fresh, new [GitHub][github_url] project under your personal account, and clone it to your desktop. We recommend calling it `real-time-tone-analysis`
+1. Create a fresh, new [GitHub][github_url] project under your personal account. We recommend calling it `real-time-tone-analysis`
 
-2. Open up the Bluemix Catalog UI and navigate to the [SDK for Node.js Runtime Starter][node.js_runtime_url] to create a NodeJS hello world app
+2. Clone the repository to your desktop. `git clone <URL>` 
+
+3. Open up the Bluemix Catalog UI and navigate to the [SDK for Node.js Runtime Starter][node.js_runtime_url] to create a NodeJS hello world app
 	* Name it `realtime-tone`
 	* Give it a similar host name, something like `realtime-tone-USERNAME`. The host you choose will be the subdomain of your app's path.
 
-3. Download the starter code from the link Bluemix gives you and save it in the empty project that you created
+4. Download the starter code from the `Download Starter Code` button Bluemix gives you and unzip it to the folder that you created in Step 2.
 
-4. Navigate to your running app to see it working - for instance `realtime-tone-am.mybluemix.net`
+5. Give it a minute or so to start, and then navigate to your running app to see it working - for instance `realtime-tone-am.mybluemix.net`
+
+
 
 ## Running the app locally
 
