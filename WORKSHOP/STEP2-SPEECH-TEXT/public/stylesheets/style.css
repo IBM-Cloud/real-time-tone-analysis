@@ -9,79 +9,90 @@ html {
 }
 
 .col-lg-12 {
-  padding: 0px!important;
+    padding: 0px!important;
 }
+
 .col-md-12 {
-  padding: 0px!important;
+    padding: 0px!important;
 }
+
 .col-sm-12 {
-  padding: 0px!important;
+    padding: 0px!important;
 }
 
 .navbar {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .nav-label {
-  color: white;
+    color: white;
 }
 
 .navbar-text {
-  overflow: hidden;
-  white-space: nowrap;
-  margin:0;
-  padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-inverse-color {
-  padding: 5px 0;
-  text-align: center;
-  display: inline-block;
-  width: 100%;
-  float: left;
+    padding: 5px 0;
+    text-align: center;
+    display: inline-block;
+    width: 100%;
+    float: left;
 }
 
 @media (min-width: 500px) {
-  .nav-inverse-color {
-    width: 50%;
-  }
+    .nav-inverse-color {
+        width: 50%;
+    }
 }
 
 @media (min-width: 730px) {
-  .nav-inverse-color {
-    width: 33.333%;
-  }
+    .nav-inverse-color {
+        width: 33.333%;
+    }
 }
 
 .audioParent {
-  margin-top: 10px;
+    margin-top: 10px;
 }
 
+
 /* numbered bullets solution from: */
+
+
 /* http://www.456bereastreet.com/archive/201105/styling_ordered_list_numbers/ */
+
 ol {
-    counter-reset:li;
-    margin-left:0;
-    padding-left:0;
+    counter-reset: li;
+    margin-left: 0;
+    padding-left: 0;
     margin-top: 1em;
 }
+
 ol > li {
-    position:relative;
-    margin: 0 0 6px 2em; /* Make room for numbers */
-    padding: 4px 8px 4px 12px; /* Add some spacing around the content */
-    list-style:none;
+    position: relative;
+    margin: 0 0 6px 2em;
+    /* Make room for numbers */
+    padding: 4px 8px 4px 12px;
+    /* Add some spacing around the content */
+    list-style: none;
     vertical-align: middle;
 }
 
 ol > li:before {
-    content:counter(li); /* Use the counter as content */
-    counter-increment:li; /* Increment the counter by 1 */
+    content: counter(li);
+    /* Use the counter as content */
+    counter-increment: li;
+    /* Increment the counter by 1 */
     /* Position and style the number */
-    position:absolute;
+    position: absolute;
     left: -2em;
-    -moz-box-sizing:border-box;
-    -webkit-box-sizing:border-box;
-    box-sizing:border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
     width: 2em;
     margin-right: 8px;
     padding: 4px;
@@ -90,16 +101,21 @@ ol > li:before {
     border-radius: 50%;
     /* top: 1em; */
     /* font-weight:bold; */
-    text-align:center;
+    text-align: center;
 }
 
 li ol,
-li ul {margin-top:6px;}
-ol ol li:last-child {margin-bottom:0;}
+li ul {
+    margin-top: 6px;
+}
+
+ol ol li:last-child {
+    margin-bottom: 0;
+}
 
 .row {
-  margin-left: 0px!important;
-  margin-right: 0px!important;
+    margin-left: 0px!important;
+    margin-right: 0px!important;
 }
 
 .body-row {
@@ -154,61 +170,65 @@ a {
 }
 
 #metadataTable th {
-  padding: 0.5em !important;
+    padding: 0.5em !important;
 }
 
 #metadataTableBody td {
-  padding: 0 !important;
+    padding: 0 !important;
 }
 
 .alt-hypothesis hr {
-  margin-bottom: 0 !important;
+    margin-bottom: 0 !important;
 }
 
 .alt-hypothesis {
-  margin-top: 2em;
+    margin-top: 2em;
 }
+
 .alt-hypothesis > p {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
+
 .hypothesis {
-  color: #5a5a5a; /*gray 60*/
-  clear: both;
-  float: left;
+    color: #5a5a5a;
+    /*gray 60*/
+    clear: both;
+    float: left;
 }
 
 .dropdown {
-  width: 135% !important;
+    width: 135% !important;
 }
 
 #dropdownMenu1 {
-  margin-bottom: 2em;
+    margin-bottom: 2em;
 }
 
 .error-row {
-  padding-left: 1em;
-  padding-right: 1em;
-  display: none;
-  background-color: #d74108;
-  color: white;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: none;
+    background-color: #d74108;
+    color: white;
 }
 
 .error-row a {
-  color: white;
-  margin-bottom: 0.2em;
+    color: white;
+    margin-bottom: 0.2em;
 }
 
 .notification-row {
-  padding-left: 1em;
-  padding-right: 1em;
-  display: none;
-  border-bottom: 2px solid #ececec;
-  background-color: #d74108;
-  color: black;
+    padding-left: 1em;
+    padding-right: 1em;
+    display: none;
+    border-bottom: 2px solid #ececec;
+    background-color: #d74108;
+    color: black;
 }
+
 .notification-row a {
-  color: black;
-  margin-bottom: 0.2em;
+    color: black;
+    margin-bottom: 0.2em;
 }
 
 .footer {
@@ -347,4 +367,43 @@ a {
     box-sizing: initial;
     -webkit-box-sizing: initial;
     -moz-box-sizing: initial;
+}
+
+.controlBar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 20px;
+}
+
+.toneControl {
+    height: 24px;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+    margin: 20px;
+}
+
+.toneSwatch {
+    height: 20px;
+    width: 20px;
+    border: 4px solid;
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.toneSwatchInner {
+    height: 17px;
+    width: 17px;
+    border: 2px solid white;
+    align-self: center;
+}
+
+.toneLabel {
+    height: 20px;
+    margin-left: 5px;
 }

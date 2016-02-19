@@ -1,0 +1,33 @@
+{
+  "name": "realtime-tone",
+  "version": "0.0.1",
+  "description": "Analyze the tone of spoken words in real time using Bluemix and Watson",
+  "scripts": {
+    "start": "node app.js",
+    "build": "browserify src/index.js | uglifyjs -nc > public/js/index.js",
+    "watch": "watchify -v -d -o public/js/index.js src/index.js"
+  },
+  "dependencies": {
+    "body-parser": "1.14.x",
+    "cfenv": "1.0.x",
+    "express": "4.13.x",
+    "watson-developer-cloud": "^1.2.3"
+  },
+  "devDependencies": {
+    "browserify": "^12.0.1",
+    "browserify-shim": "^3.8.12",
+    "watchify": "^3.6.1",
+    "uglifyjs": "^2.4.10"
+  },
+  "browserify-shim": {
+    "jquery": "global:jQuery"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "engines": {
+    "node": "0.12.x"
+  }
+}

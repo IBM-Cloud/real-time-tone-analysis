@@ -211,7 +211,7 @@ Next, we enter the last phase of this workshop - using the tone analysis results
 
 <!--Links-->
 [ta_url]: https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tone-analyzer.html
-[lt_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/language-translation.html
+[lt_url]: https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/language-translation.html
 [tts_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech.html
 [nlc_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/nl-classifier.html
 [d_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/dialog.html
