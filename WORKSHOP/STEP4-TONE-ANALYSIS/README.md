@@ -209,12 +209,11 @@ You can play with and check out the source code for some of these pattern exampl
 
 Next, we enter the last phase of this workshop - using the tone analysis results in the UI...
 
-<!--Links-->
-[ta_url]: https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tone-analyzer.html
-[lt_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/language-translation.html
-[tts_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech.html
-[nlc_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/nl-classifier.html
-[d_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/dialog.html
-[rar_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/retrieve-rank.html
-[watson_gallery_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/gallery.html
-
+<!--Links-->  
+[ta_url]: https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tone-analyzer.html  
+[lt_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/language-translation.html  
+[tts_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech.html  
+[nlc_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/nl-classifier.html  
+[d_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/dialog.html  
+[rar_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/retrieve-rank.html  
+[watson_gallery_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/gallery.html  
