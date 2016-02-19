@@ -49,9 +49,14 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	var express   = require('express'),
 		app         = express(),
 		bodyParser  = require('body-parser'),
-		cfenv       = require('cfenv'),
-		watson      = require('watson-developer-cloud'); <-- Add this
+		cfenv       = require('cfenv'), //*****<-- Replace ; with a ,
+		watson      = require('watson-developer-cloud'); //*****<-- Add this
 	...
+	...
+	...
+	...
+	//*****Add the following functions
+	
 	// Configure Watson Speech to Text service
 	var speechCreds = {
 	  url: 'https://stream.watsonplatform.net/speech-to-text/api',
@@ -75,13 +80,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 
 3. Add an additional stylesheet called [`public/stylesheets/watson-bootstrap-style.css`](./public/stylesheets/watson-bootstrap-style.css) to style elements we are about to add to our markup.
 
-4. Remove the div with `class='site'` and add a few divs to our [`public/index.html`](./public/index.html) file to invoke the Speech to Text service and display the results.
-
-	Also, link to the new stylesheet in your `<head>` section
-	
-	```
-    <link rel="stylesheet" href="stylesheets/watson-bootstrap-style.css">
-	```
+4. Next, grab the code from [`public/index.html`](./public/index.html) This will introduce a few new elements to invoke the Speech to Text service and display the results. It will also use the new stylesheet we just brought in.
 
 5. Add the following images to the `/public/image` folder:
 	* [`microphone.svg`](./public/images/microphone.svg) - begin recording speech
@@ -154,8 +153,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	```
 
 ## Developing Locally with VCAP_SERVICES
-
-I'm guessing you noticed this development misstep, but we hard-coded the credentials for the Speech to Text API directly into our `app.js` file. This is obviously not a good practice when developing our apps, particularly when it comes to source code management.
+Now, you're probably wondering if we are going to insert credentials into the app.js, but we don't want to hard-code the credentials for the Speech to Text API directly into our `app.js` file. This is obviously not a good practice when developing our apps, particularly when it comes to source code management.
 
 Since these credentials will be accessible as environment variables when the app is running on Bluemix, we want to emulate this behavior locally. To create this environment parity between Bluemix and our local machines, we will use the `cfenv` Node.js package.
 
@@ -193,10 +191,14 @@ Since these credentials will be accessible as environment variables when the app
 	var appEnvOpts = vcapLocal ? {vcap:vcapLocal} : {}
 	var appEnv = cfenv.getAppEnv(appEnvOpts);
 	...
+	...
+	...
 	// Configure Watson Speech to Text service
 	var speechCreds = getServiceCreds(appEnv, 'rtt-speech-to-text');
 	speechCreds.version = 'v1';
 	var authService = watson.authorization(speechCreds);
+	...
+	...
 	...
 	// Retrieves service credentials for the input service
 	function getServiceCreds(appEnv, serviceName) {
