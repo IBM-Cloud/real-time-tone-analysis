@@ -57,7 +57,7 @@
             </div>
             <!-- row -->
 
-            <div class="row">
+                        <div class="row">
                 <nav class="navbar navbar-inverse">
                     <ul class="navbar-text">
                         <li id="recordButton" class="button-row nav-inverse-color">
@@ -71,10 +71,6 @@
                         <li class="play-sample-2 button-row nav-inverse-color">
                             <img src="images/play.svg" class="icon">
                             <span class="nav-label">Play Sample 2</span>
-                        </li>
-                        <li class="save-results button-row nav-inverse-color"  data-toggle="modal" data-target="#myModal" onclick = "prepareDataForSave()">
-                            <img src="images/save.svg" class="icon">
-                            <span class="nav-label">Save Results</span>
                         </li>
                     </ul>
                 </nav>
@@ -132,15 +128,6 @@
             <!-- /.tabpanel -->
 
             <div class="row">
-                <div id="timeline" class="col-md-12">
-                    <!-- smoothie chart -->
-
-                </div>
-            </div>
-            <!-- row -->
-
-
-            <div class="row">
                 <div class="col-md-12">
 
                     <div class="panel panel-default">
@@ -194,48 +181,8 @@
 
         </div>
         <!-- row -->
-
-
-        <!-- Modal -->
-        <div id="myModal" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-              <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Save to API</h4>
-              </div>
-              <div class="modal-body">
-
-                <div class="form-group">
-                  <label for="usr">Name:</label>
-                  <input type="text" class="form-control" id="nameToSave" value = "John Doe">
-                </div>
-
-                <div class="form-group">
-                  <label for="usr">Text:</label>
-                    <textarea class="form-control" style = "height:100px" readonly id="textToSave" dir="auto"></textarea>
-                </div>
-
-                <div class="form-group">
-                  <label for="usr">Result:</label>
-                    <textarea class="form-control" style = "height:100px" readonly id="jsonToSave" dir="auto"></textarea>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-success" onclick = "saveData()">Save</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-
     </div>
     <!-- /.container -->
-
-    <!--    <div class="site"></div>-->
 
     <!-- Footer Div-->
     <div class="footer">
@@ -258,12 +205,6 @@
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="js/index.js"></script>
-    <script type="text/javascript" src="js/smoothie.js"></script>
-    <script type="text/javascript" src="js/chart.js"></script>
-    <script type="text/javascript" src="js/tone.js"></script>
-    <script type="text/javascript" src="js/process.js"></script>
-    <script type="text/javascript" src="js/save.js"></script>
-
 
 </body>
 

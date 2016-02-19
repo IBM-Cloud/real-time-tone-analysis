@@ -1,0 +1,5 @@
+*.log
+node_modules/
+src/
+.DS_STORE
+README.md

@@ -30,7 +30,7 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 
 1. First let's spend some time learning about `npm`, the Node.js package manager. We'll explore a few packages for databases, social media, algorithms and managing dependencies via `package.json` ... then we'll see it in action.
 
-2. Let's update our [`package.json`](./package.json) to run the right version of Node.js and add `body-parser` as a dependency.
+2. Let's update our [`package.json`](./package.json) to run the right version of Node.js and add `body-parser` as a dependency
 
 3. Go ahead and install the packages we need for the hello world app
 
@@ -83,9 +83,9 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 	</body>
 	```
 
-6. Copy over the expanded [`style.css`](./public/stylesheets/style.css) stylesheet so that everything looks beautiful.
+6. Copy over the expanded [`style.css`](./public/stylesheets/style.css) stylesheet so that everything looks beautiful
 
-7. Finally, let's bring the [`app.js`](./app.js) file in line for future updates. Once you finish this, fire up the app again locally to see your changes.
+7. Finally, let's bring the [`app.js`](./app.js) file in line for future updates. Once you finish this, fire up the app again locally to see your changes
 
 8. Using the cf command line, let's deploy our app
 
@@ -100,7 +100,7 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 	```
 	$ cf logs realtime-tone --recent
 	```
-10. Let's play with some `console.log()/error()` statements a bit to see how these log outputs react.
+10. Let's play with some `console.log()` and `console.error()` statements to see how these might help us debug
 
 And those are the basics of Node.js development using Bluemix. Easy enough, but that was just the grounding we needed for the next step ... adding our first service ...
 

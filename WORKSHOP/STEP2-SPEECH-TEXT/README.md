@@ -4,7 +4,7 @@ Now that we have our base Node.js application, let's make it do something cool! 
 
 ## Adding the Speech to Text Service
 
-The first thing we need to do is provision a Watson service. Each [Cloud Foundry service][cf_service_url] acts as a pooled resource, with users able to provision a service instance for their organization's use. Each service instance can have 'n' number of service credentials with which apps can use to call the service. By binding the service instance to your app, these crednetials automatically become accessible as environment variables. Let's walk through creating a Watson service now.
+The first thing we need to do is provision a Watson service. Each [Cloud Foundry service][cf_service_url] acts as a pooled resource, with users able to provision a service instance for use in a specific space. Each service instance can have 'n' number of service credentials with which apps can use to call the service. By binding the service instance to your app, these credentials automatically become accessible as environment variables. Let's walk through creating a Watson service now.
 
 1. Go to the IBM Bluemix catalog and find the [Watson Speech to Text service][stt_service_url]
 
@@ -37,37 +37,181 @@ Each API that Watson exposes has a particular use case within the machine learni
 
 Now that we understand what Watson does and have seen several use cases, let's see what it can do for us. This section will walk you through how to call and leverage Watson from within our app.
 
-1. Update `app.js` (hard-code creds)
+1. First, we are going to install a dependency that will help us utilize the Speech to Text service. Download the module with the following command
 
-2. Build our basic `index.html` file.
+	```
+	$ npm install watson-developer-cloud --save
+	```
 
-3. Add our first style files. Both css files.
+2. Next, we will update our [`app.js`](./app.js) file to leverage this module
 
-4. Add all images.
+	```
+	var express   = require('express'),
+		app         = express(),
+		bodyParser  = require('body-parser'),
+		cfenv       = require('cfenv'),
+		watson      = require('watson-developer-cloud'); <-- Add this
+	...
+	// Configure Watson Speech to Text service
+	var speechCreds = {
+	  url: 'https://stream.watsonplatform.net/speech-to-text/api',
+	  username: 'USERNAME',
+	  password: 'PASSWORD',
+	  version: 'v1'
+	}
+	var authService = watson.authorization(speechCreds);
+	
+	// Get token using your credentials
+	app.post('/api/token', function(req, res, next) {
+	  authService.getToken({url: speechCreds.url}, function(err, token) {
+	    if (err)
+	      next(err);
+	    else
+	      res.send(token);
+	  });
+	});
+	```
+	The `/api/token` route will create an access token for all requesting clients and will subsequently handle the socket-based communication between the app and client
 
-5. Add sample audio files.
+3. Add an additional stylesheet called [`public/stylesheets/watson-bootstrap-style.css`](./public/stylesheets/watson-bootstrap-style.css) to style elements we are about to add to our markup.
 
-6. Pull in Watson `src` folder for StT.
+4. Remove the div with `class='site'` and add a few divs to our [`public/index.html`](./public/index.html) file to invoke the Speech to Text service and display the results.
 
-7. Install `npm` modules
+	Also, link to the new stylesheet in your `<head>` section
+	
+	```
+    <link rel="stylesheet" href="stylesheets/watson-bootstrap-style.css">
+	```
 
-8. Run build with `browserify` to create `index.js` file
+5. Add the following images to the `/public/image` folder:
+	* [`microphone.svg`](./public/images/microphone.svg) - begin recording speech
+	* [`play.svg`](./public/images/play.svg) - play the sample audio file
+	* [`play-red.svg`](./public/images/play-red.svg) - clicked the play button
+	* [`stop-red.svg`](./public/images/stop-red.svg) - stop the audio recording
+	* [`stop.svg`](./public/images/stop.svg) - clicked to stop the audio recording
+	* [`drop-down-arrow.svg`](./public/images/drop-down-arrow.svg) - expand the metadata table
+	* [`drop-up-arrow.svg`](./public/images/drop-up-arrow.svg) - collapse the metadata table
 
-9. Test the app to see the transcription.
+6. Create a new `/public/audio` folder and add the sample audio files:
+	* [`Us_English_Broadband_Sample_1.wav`](./public/audio/Us_English_Broadband_Sample_1.wav)
+	* [`Us_English_Broadband_Sample_2.wav`](./public/audo/Us_English_Broadband_Sample_2.wav)
 
-10. Push the app to Bluemix and test there.
+7. Let's quickly stop here and check out what we have now. Remember to start the app with the following command
+
+	```
+	$ npm start
+	```
+	Everything looks in order. Let's proceed and import the code that is going to run the speech to text transcription logic behind the scenes.
+	
+8. Import the `src/` folder into the root directory. This contains the client-side code that will handle microphone interaction, sample file streaming, and client-server communication via sockets.
+
+9. We are going to compile these files with [browserify][browserify_url] to create the `public/js/index.js` file. To do this, we first need to add several parameters to [`package.json`](./package.json) so that this same process occurs when we push our app to Bluemix
+	
+	```
+	"scripts": {
+		"start": "node app.js",
+		"build": "browserify src/index.js | uglifyjs -nc > public/js/index.js",
+		"watch": "watchify -v -d -o public/js/index.js src/index.js"
+	},
+	"devDependencies": {
+		"browserify": "^12.0.1",
+		"browserify-shim": "^3.8.12",
+		"watchify": "^3.6.1",
+		"uglifyjs": "^2.4.10"
+	},
+	"browserify-shim": {
+		"jquery": "global:jQuery"
+	},
+	"browserify": {
+		"transform": [
+			"browserify-shim"
+		]
+	},
+	```
+	After that is done, execute the following commands
+	
+	```
+	$ npm install
+	$ mkdir public/js
+	$ npm run build
+	```
+
+10. Update your [`public/index.html`](./public/index.html) file again to call this and several other dependent scripts
+
+	```
+	<!-- Place js files at the end of the document, with fallbacks for CDNs -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/index.js"></script>
+	```
+
+11. Test locally
+
+12. Push the app to Bluemix and verify everything works there as well
+
+	```
+	$ cf push
+	```
 
 ## Developing Locally with VCAP_SERVICES
 
-I'm guessing you noticed this development misstep, but we hard-coded the credentials for the Speech to Text API directly into our `app.js` file. This is obviously not a good practice when developing our apps locally.
+I'm guessing you noticed this development misstep, but we hard-coded the credentials for the Speech to Text API directly into our `app.js` file. This is obviously not a good practice when developing our apps, particularly when it comes to source code management.
 
-Since these credentials will be accessible as environment variables when the app is running on Bluemix, we want to emulate this behavior locally. To create this environment parity between Bluemix and our local machines, we will use a Node.js package called `cfenv` to handle.
+Since these credentials will be accessible as environment variables when the app is running on Bluemix, we want to emulate this behavior locally. To create this environment parity between Bluemix and our local machines, we will use the `cfenv` Node.js package.
 
-1. Update app.js to use `cfenv`
+1. Create the [`vcap-local.json`](./vcap-local.json) file
 
-2. Create the vcap-local file
+	```
+	{
+	  "services": {
+	    "speech_to_text": [
+	      {
+	        "name": "rtt-speech-to-text",
+	        "label": "speech_to_text",
+	        "plan": "standard",
+	        "credentials": {
+	          "url": "https://stream.watsonplatform.net/speech-to-text/api",
+	          "username": "USERNAME",
+	          "password": "PASSWORD"
+	        }
+	      }
+	    ]
+	  }
+	}
+	```
 
-3. Create .cfignore and .gitignore files
+2. Update [`app.js`](./app.js) to read from the `vcap-local.json` file for the `cfenv` module configuration
+
+	```
+	// cfenv provides access to your Cloud Foundry environment
+	var vcapLocal = null
+	try {
+	  vcapLocal = require("./vcap-local.json")
+	}
+	catch (e) {}
+	
+	var appEnvOpts = vcapLocal ? {vcap:vcapLocal} : {}
+	var appEnv = cfenv.getAppEnv(appEnvOpts);
+	...
+	// Configure Watson Speech to Text service
+	var speechCreds = getServiceCreds(appEnv, 'rtt-speech-to-text');
+	speechCreds.version = 'v1';
+	var authService = watson.authorization(speechCreds);
+	...
+	// Retrieves service credentials for the input service
+	function getServiceCreds(appEnv, serviceName) {
+	  var serviceCreds = appEnv.getServiceCreds(serviceName)
+	  if (!serviceCreds) {
+	    console.log("service " + serviceName + " not bound to this application");
+	    return null;
+	  }
+	  return serviceCreds;
+	}
+	```
+
+3. Update your [`.cfignore`](./.cfignore) file to inclue `vcap-local.json` and the `src/` folder
+
+Now that we have our first service connected, we will next walk through hooking up our app to a database...
 
 <!--Links--> 
 [stt_service_url]: https://console.ng.bluemix.net/catalog/services/speech-to-text
@@ -77,4 +221,5 @@ Since these credentials will be accessible as environment variables when the app
 [watson_nlc_demo]: https://natural-language-classifier-demo.mybluemix.net/
 [watson_pi_demo]: https://runkeeper-hashmatch.mybluemix.net/
 [watson_alchemy_demo]: http://vision.alchemy.ai/#demo
+[browserify_url]: http://browserify.org/
 
