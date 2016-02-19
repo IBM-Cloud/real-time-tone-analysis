@@ -16,7 +16,11 @@ The following are our goals for you, the developer, to achieve by the end of thi
 
 1. Create a fresh, new [GitHub][github_url] project under your personal account. We recommend calling it `real-time-tone-analysis`
 
-2. Clone the repository to your desktop. `git clone <URL>` 
+2. Clone the repository to your desktop
+
+	```
+	git clone https://github.com/IBM-Bluemix/real-time-tone-analysis.git
+	```
 
 3. Open up the Bluemix Catalog UI and navigate to the [SDK for Node.js Runtime Starter][node.js_runtime_url] to create a NodeJS hello world app
 	* Name it `realtime-tone`
