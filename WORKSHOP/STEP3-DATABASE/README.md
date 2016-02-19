@@ -1,6 +1,6 @@
 # Step 3: Creating a Database API
 
-We have our base aplication working at this point. We have a Node.js back end running on Bluemix, a stylized front end which handles client-side interaction, and Watson SaaS to help us transcribe the user's speech. However we are missing a core component of any application: the datastore. We need to be able to persist dat. Right now, our transcripts are dissapearing into the ether after every session. This step will lay out how easy it is to not only create a database on Bluemix, but to interface with it by wrapping it in a simple RESTful [Loopback API][loopback_url].
+We have our base application working at this point. We have a Node.js back end running on Bluemix, a stylized front end which handles client-side interaction, and Watson SaaS to help us transcribe the user's speech. However, we are missing a core component of any application: the datastore. We need to be able to persist dat. Right now, our transcripts are dissapearing into the ether after every session. This step will lay out how easy it is to not only create a database on Bluemix, but to interface with it by wrapping it in a simple RESTful [Loopback API][loopback_url].
 
 ## Creating the Loopback API
 
@@ -131,7 +131,7 @@ Your API Explorer API at `http://0.0.0.0:3000/explorer`
 	
 	If we tried to start the app now, it would fail since it needs a bound Cloudant database.
 
-3. Go to your new app's dashbaord and click on `Bind a Service`, choose the Cloudant database you created earlier. You'll be prompoted to restage. Click Yes. After that completes (about a minute):
+3. Go to your new app's dashboard and click on `Bind a Service`, choose the `rtt-cloudant` service you created earlier. You'll be prompted to restage. Click Yes. After that completes (about a minute):
 
 Your REST API is available at `http://cloudantAPI-USERNAME.mybluemix.net/api/Items`  
 Your API Explorer API at `http://cloudantAPI-USERNAME.mybluemix.net/explorer`
@@ -140,40 +140,59 @@ Your API Explorer API at `http://cloudantAPI-USERNAME.mybluemix.net/explorer`
 
 Let's update our `realtime-tone` app now so that it leverages this new Cloudant DB API. When you click the `Save` button, we want it to call our Loopback API with the data we want to save.
 
-1. Update `public/index.html` with a modal view for viewing Speech to Text results before we save.
+1. Update [`public/index.html`](./public/index.html) with a save button and a modal view for viewing Speech to Text results before we save
 
 	```
-	<div id="myModal" class="modal fade" role="dialog">
-	  <div class="modal-dialog">
+	<li class="save-results button-row nav-inverse-color"  data-toggle="modal" data-target="#myModal" onclick = "prepareDataForSave()">
+       <img src="images/save.svg" class="icon">
+       <span class="nav-label">Save Results</span>
+   </li>
+	...
+	<!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Save to API</h4>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="usr">Name:</label>
+                        <input type="text" class="form-control" id="nameToSave" value = "John Doe">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="usr">Text:</label>
+                        <textarea class="form-control" style = "height:100px" readonly id="textToSave" dir="auto"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick = "saveData()">Save</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+	```
 	
-	    <!-- Modal content-->
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal">&times;</button>
-	        <h4 class="modal-title">Save to API</h4>
-	      </div>
-	      <div class="modal-body">
-	
-	        <div class="form-group">
-	          <label for="usr">Name:</label>
-	          <input type="text" class="form-control" id="nameToSave" value = "John Doe">
-	        </div>
-	
-	        <div class="form-group">
-	          <label for="usr">Text:</label>
-	            <textarea class="form-control" style = "height:100px" readonly id="textToSave" dir="auto"></textarea>
-	        </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-success" onclick = "saveData()">Save</button>
-	      </div>
-	    </div>
-	
-	  </div>
-	</div>
+2. Add the [`public/images/save.svg`](./public/images/save.svg) file
+
+3. Update the `nav-inverse-color` class in [`public/stylesheets/style.css`](./public/stylesheets/style.css) as follows
+
+	```
+	@media (min-width: 730px) {
+	  .nav-inverse-color {
+	    width: 25%;
+	  }
+	}
 	```
 
-2. Create a file called `public/js/save.js` which handles saving the Speech to Text results for the session
+4. Create a file called [`public/js/save.js`](./public/js/save.js) which handles saving the Speech to Text results for the session
 	
 	```
 	//Fill out the fields in the Save form
@@ -208,11 +227,17 @@ Let's update our `realtime-tone` app now so that it leverages this new Cloudant 
 	$.post( "http://cloudantAPI-USERNAME.mybluemix.net/api/Items", dataToSend,function( data ) {
 	```
 
-3. Test the app locally
+5. Return to [`public/index.html`](./public/index.html) and add a script for the `public/js/save.js` file
 
-4. Make a GET (go to it in your browser) to `http://cloudantAPI-USERNAME.mybluemix.net/api/Items` to ensure everything is working.
+	```
+    <script type="text/javascript" src="js/save.js"></script>
+	```
 
-5. Push the updated `realtime-tone` app back to Bluemix
+5. Test the app locally
+
+6. Make a GET (go to it in your browser) to `http://cloudantAPI-USERNAME.mybluemix.net/api/Items` to ensure everything is working.
+
+7. Push the updated `realtime-tone` app back to Bluemix
 
 Our transcripts are now being saved to the database. Easy enough, right? This pattern is extremely useful when building applications where encapsulation and reusability are priorities. Let's discuss this in (a little) more depth.
 
