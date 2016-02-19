@@ -149,6 +149,7 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
       }
     ]
 	```
+
 	To get the credentials without returning to the Bluemix UI, we can issue the following command using the CLI
 
 	```
@@ -207,7 +208,7 @@ We have also seen companies using Watson services to create their own smart chat
 
 You can play with and check out the source code for some of these pattern examples in the [Watson Sample App Gallery][watson_gallery_url]. You might even see Real Time Tone Analysis there sometime soon...
 
-Next, we enter the last phase of this workshop - using the tone analysis results in the UI...
+Next, we enter the last phase of this workshop - using the tone analysis results in the UI...  
 
 <!--Links-->
 [ta_url]: https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tone-analyzer.html
@@ -217,4 +218,3 @@ Next, we enter the last phase of this workshop - using the tone analysis results
 [d_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/dialog.html
 [rar_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/retrieve-rank.html
 [watson_gallery_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/gallery.html
-
