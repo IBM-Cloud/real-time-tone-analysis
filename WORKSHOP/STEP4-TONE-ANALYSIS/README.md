@@ -161,7 +161,7 @@ Great! We're now analyzing the text coming back from the Speech to text service.
 
 ## Saving the Tone Analysis
 
-1. Update `public/index.html` to include a field for the tone analysis JSON in the save modal
+1. Update [`public/index.html`](./public/index.html) to include a field for the tone analysis JSON in the save modal
 
 	```
 	<div class="form-group">
@@ -170,7 +170,7 @@ Great! We're now analyzing the text coming back from the Speech to text service.
     </div>
 	```
 
-2. Update the `public/js/tone.js` file so that we are continuously saving the tone results to a global variable called `lastToneResult`
+2. Update the [`public/js/tone.js`](./public/js/tone.js) file so that we are continuously saving the tone results to a global variable called `lastToneResult`
 
 	```
 	var lastToneResult = {};
@@ -179,7 +179,7 @@ Great! We're now analyzing the text coming back from the Speech to text service.
   	lastToneResult = tone;
 	```
 
-3. Update the `public/js/save.js` file to grab the `lastToneResult` and save it along with the StT results.
+3. Update the [`public/js/save.js`](./public/js/save.js) file to grab the `lastToneResult` and save it along with the StT results.
 
 	```
 	// Get last tone data in prepareDataForSave()
@@ -209,7 +209,7 @@ You can play with and check out the source code for some of these pattern exampl
 
 Next, we enter the last phase of this workshop - using the tone analysis results in the UI...
 
-<!--Links--> 
+<!--Links-->
 [ta_url]: https://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/tone-analyzer.html
 [lt_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/language-translation.html
 [tts_url]: http://www.ibm.com/smarterplanet/us/en/ibmwatson/developercloud/text-to-speech.html
