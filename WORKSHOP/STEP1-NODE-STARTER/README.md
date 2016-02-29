@@ -95,8 +95,11 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 
 7. Finally, let's bring the [`app.js`](./app.js) file in line for future updates. Once you finish this, fire up the app again locally to see your changes
 
-8. Using the cf command line, let's deploy our app
+8. Using the cf command line, login, and then let's deploy our app
 
+	```
+	$ cf login -a https://api.ng.bluemix.net
+	```
 	```
 	$ cf push
 	```
