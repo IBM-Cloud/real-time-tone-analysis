@@ -19,7 +19,7 @@ The following are our goals for you, the developer, to achieve by the end of thi
 2. Clone the repository to your desktop
 
 	```
-	git clone https://github.com/IBM-Bluemix/real-time-tone-analysis.git
+	git clone https://github.com/<YOURID>/real-time-tone-analysis.git
 	```
 
 3. Open up the Bluemix Catalog UI and navigate to the [SDK for Node.js Runtime Starter][node.js_runtime_url] to create a NodeJS hello world app
@@ -91,7 +91,7 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 	</body>
 	```
 
-6. Copy over the expanded [`style.css`](./public/stylesheets/style.css) stylesheet so that everything looks beautiful
+6. Copy over the expanded [`style.css`](./public/stylesheets/style.css) stylesheet and the [`images`] folder so that everything looks beautiful
 
 7. Finally, let's bring the [`app.js`](./app.js) file in line for future updates. Once you finish this, fire up the app again locally to see your changes
 
