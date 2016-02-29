@@ -93,7 +93,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 
 6. Create a new `/public/audio` folder and add the sample audio files:
 	* [`Us_English_Broadband_Sample_1.wav`](./public/audio/Us_English_Broadband_Sample_1.wav)
-	* [`Us_English_Broadband_Sample_2.wav`](./public/audo/Us_English_Broadband_Sample_2.wav)
+	* [`Us_English_Broadband_Sample_2.wav`](./public/audio/Us_English_Broadband_Sample_2.wav)
 
 7. Let's quickly stop here and check out what we have now. Remember to start the app with the following command
 
