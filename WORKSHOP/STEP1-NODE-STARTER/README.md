@@ -14,15 +14,15 @@ The following are our goals for you, the developer, to achieve by the end of thi
 
 ## Let's get started
 
+1. Create a folder called "real-time-tone"
 
-
-1. Open up the Bluemix Catalog UI and navigate to the [SDK for Node.js Runtime Starter][node.js_runtime_url] to create a NodeJS hello world app
+2. Open up the Bluemix Catalog UI and navigate to the [SDK for Node.js Runtime Starter][node.js_runtime_url] to create a NodeJS hello world app
 	* Name it `realtime-tone`
 	* Give it a similar host name, something like `realtime-tone-USERNAME`. The host you choose will be the subdomain of your app's path.
 
-2. Download the starter code from the `Download Starter Code` button Bluemix gives you and unzip it to the folder that you created in Step 2.
+3. Download the starter code from the `Download Starter Code` button Bluemix gives you and unzip it to the folder that you created in Step 2.
 
-3. Give it a minute or so to start, and then navigate to your running app to see it working - for instance `realtime-tone-am.mybluemix.net`
+4. Give it a minute or so to start, and then navigate to your running app to see it working - for instance `realtime-tone-am.mybluemix.net`
 
 
 
