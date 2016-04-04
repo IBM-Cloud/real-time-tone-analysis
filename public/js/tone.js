@@ -23,6 +23,20 @@ function getToneValues(tone_category) {
 }
 
 /**
+ * Converts a set of tones into flat objects
+ * @param {Object} doc/sentence tones returned from API
+ */
+function getTones(tone) {
+  var tones = {
+    emotion: getToneValues(tone.tone_categories[0]),
+    writing: getToneValues(tone.tone_categories[1]),
+    social: getToneValues(tone.tone_categories[2])
+  };
+
+  return tones;
+}
+
+/**
  * Success callback for tone alaysis POST request
  * @param {Object} response data from api
  */
@@ -33,19 +47,11 @@ function toneCallback(data) {
   };
 
   // Results for the updated full transcript's tone
-  tone.doc.emotion = getToneValues(data.document_tone.tone_categories[0]),
-  tone.doc.writing = getToneValues(data.document_tone.tone_categories[1]),
-  tone.doc.social = getToneValues(data.document_tone.tone_categories[2]);
+  tone.doc = getTones(data.document_tone);
 
   // Results for the latest sentence's tone
-  if (data.sentences_tone) {
-    var numSentences = data.sentences_tone.length - 1;
-    if (data.sentences_tone[numSentences].tone_categories.length) {
-      tone.sentence.emotion = getToneValues(data.sentences_tone[numSentences].tone_categories[0]);
-      tone.sentence.writing = getToneValues(data.sentences_tone[numSentences].tone_categories[1]);
-      tone.sentence.social = getToneValues(data.sentences_tone[numSentences].tone_categories[2]);
-    }
-  }
+  if (data.sentences_tone && data.sentences_tone[data.sentences_tone.length - 1].tone_categories.length)
+      tone.sentence = getTones(data.sentences_tone[data.sentences_tone.length - 1]);
 
   //Save the last result from TA
   lastToneResult = tone;

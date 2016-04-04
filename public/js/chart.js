@@ -73,10 +73,10 @@
         anchor.appendChild(this.canvas);
         this.chart.streamTo(this.canvas);
 
-        this.controlBar = document.createElement('div');
-        this.controlBar.className = "controlBar";
+        var controlBar = document.createElement('div');
+        controlBar.id = controlBar.className = "controlBar";
 
-        anchor.appendChild(this.controlBar);
+        anchor.appendChild(controlBar);
     }
 
     // Default configuration settings for the SmoothieChart
@@ -94,6 +94,20 @@
     }
 
     /**
+     * Creates a options needed for adding a TimeSeries
+     * @param {string}  timeseries sentiment
+     * @param {int}     index of TIMELINES_STYLES[] for timeseries styling
+     */
+    function createTimeSeriesOptions(sentiment, i) {
+        return {
+            sentiment: sentiment,
+            strokeStyle: ('rgb(' + TIMELINES_STYLES[i][0] + ',' + TIMELINES_STYLES[i][1] + ',' + TIMELINES_STYLES[i][2] + ')'),
+            fillStyle: ('rgba(' + TIMELINES_STYLES[i][0] + ',' + TIMELINES_STYLES[i][1] + ',' + TIMELINES_STYLES[i][2] + ',0.0)'),
+            lineWidth: LINE_WIDTH
+        };
+    }
+
+    /**
      * Adds tone timelines to the chart
      */
     Chart.prototype.addTimeLines = function () {
@@ -103,47 +117,48 @@
         else if (this.type === WRITING) tones = WRITING_TONES;
         else if (this.type === SOCIAL) tones = SOCIAL_TONES;
 
-
-
-
         // Create a timeline for each tone
         var sentiment;
         for (var i = 0; i < tones.length; i++) {
             this.timelines[tones[i]] = new TimeSeries();
-            sentiment = {
-                sentiment: tones[i],
-                strokeStyle: ('rgb(' + TIMELINES_STYLES[i][0] + ',' + TIMELINES_STYLES[i][1] + ',' + TIMELINES_STYLES[i][2] + ')'),
-                fillStyle: ('rgba(' + TIMELINES_STYLES[i][0] + ',' + TIMELINES_STYLES[i][1] + ',' + TIMELINES_STYLES[i][2] + ',0.0)'),
-                lineWidth: LINE_WIDTH
-            };
-            this.chart.addTimeSeries(this.timelines[tones[i]], sentiment);
+            this.chart.addTimeSeries(this.timelines[tones[i]], createTimeSeriesOptions(tones[i], i));
 
-            this.addControl(i, TIMELINES_STYLES[i], tones[i]);
+            // Add a timeseries control element to the key
+            this.addControl(i, tones[i]);
         }
     };
 
+    /**
+     * Toggles charting for a specific tone category
+     */
     Chart.prototype.toggleTimeLine = function (swatch) {
         if (swatch.dataset.state === 'on') {
             swatch.dataset.state = 'off';
             swatch.style.background = 'white'
+
             this.chart.removeTimeSeries(this.timelines[swatch.dataset.trait]);
         } else {
             swatch.dataset.state = 'on';
             swatch.style.background = swatch.dataset.mycolor;
-            this.chart.addTimeSeries(this.timelines[swatch.dataset.trait], swatch.dataset.trait);
+            this.chart.addTimeSeries(this.timelines[swatch.dataset.trait], createTimeSeriesOptions(swatch.dataset.trait, swatch.dataset.index));
         }
     }
 
-    Chart.prototype.addControl = function (index, color, trait) {
+    /**
+     * Adds a timeseries control to the Smoothiechart control bar
+     */
+    Chart.prototype.addControl = function (index, trait) {
 
-        var rgb = "rgb(" + color[0] + "," + color[1] + "," + color[2] + ")";
+        var rgb = "rgb(" + TIMELINES_STYLES[index][0] + "," + TIMELINES_STYLES[index][1] + "," + TIMELINES_STYLES[index][2] + ")";
 
         var toggle = document.createElement('div');
         toggle.className = "toneControl";
 
+        // Creat a control element for toggling the timeseries line
         var swatch = document.createElement('div');
         swatch.className = "toneSwatch";
         swatch.style.borderColor = rgb;
+        swatch.style.background = rgb;
         swatch.dataset.state = "on";
         swatch.dataset.trait = trait;
         swatch.dataset.index = index;
@@ -152,23 +167,16 @@
             this.toggleTimeLine(e.target)
         }.bind(this);
 
-        var swatchInner = document.createElement('div');
-        swatchInner.className = "toneSwatchInner";
-
-        //        swatch.appendChild(swatchInner);
-
+        // Create a label for the timeseries control
         var label = document.createElement('label');
         label.className = "toneLabel";
         label.innerHTML = trait;
         label.color = rgb;
 
+        // Add control elements to the DOM
         toggle.appendChild(swatch)
         toggle.appendChild(label);
-
-        swatch.style.background = rgb;
-
-
-        this.controlBar.appendChild(toggle);
+        document.getElementById('controlBar').appendChild(toggle);
     }
 
     /**
