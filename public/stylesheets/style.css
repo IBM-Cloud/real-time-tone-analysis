@@ -369,9 +369,45 @@ a {
     -moz-box-sizing: initial;
 }
 
-.controlBar {
+#toneline {
+    margin: 0px;
+}
+
+.controller {
+    border: 2px solid #ececec;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.levelTogglesBox {
+    padding: 0px;
+    display: block;
+    text-align: center;
+}
+
+.levelToggle {
+    border-right: 2px solid #ececec;
+    padding: 5px 0px 5px 0px;
+    background-color: #f4f4f4;
+}
+
+.levelToggle:hover {
+    cursor: pointer;
+    background-color: #ececec;
+}
+
+.levelToggleActive {
+    font-weight: bold;
+    background-color: #ececec;
+}
+
+.levelToggleText {
+    margin: 0px;
+}
+
+.controlBar {
+    display: -webkit-inline-box;
     justify-content: space-between;
     align-items: center;
     height: 20px;

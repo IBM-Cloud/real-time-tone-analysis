@@ -5,6 +5,9 @@
         WRITING = 'writing',
         SOCIAL = 'social';
 
+    var DOC = 'document',
+        SENTENCE = 'sentence';
+
     // Tone Timeline Style Constants
     var LINE_WIDTH = 3,
         EMOTION_TONES = ['anger', 'disgust', 'fear', 'joy', 'sadness'],
@@ -73,11 +76,65 @@
         anchor.appendChild(this.canvas);
         this.chart.streamTo(this.canvas);
 
-        var controlBar = document.createElement('div');
-        controlBar.id = controlBar.className = "controlBar";
-
-        anchor.appendChild(controlBar);
+        // Create the control key for the Smoothiechart
+        var controller = document.createElement('div');
+        controller.id = controller.className = "controller";
+        anchor.appendChild(controller);
     }
+
+    /**
+     * Initializes a chart object with a canvas and timeseries
+     * @param {Element} div element containing the controllers
+     * @param {bool} true for doc, false for sentence
+     */
+    function addLevelController(chart, levelController, level) {
+        // Create the toggle div
+        var levelToggle = document.createElement('div');
+        var levelToggleClass;
+        if (this.level === DOC)
+            levelToggleClass = (level === DOC) ? "levelToggle levelToggleActive" : "levelToggle";
+        else
+            levelToggleClass = (level === DOC) ? "levelToggle" : "levelToggle levelToggleActive";
+        levelToggle.className = "row " + levelToggleClass;
+        levelToggle.dataset.level = level;
+        levelToggle.onclick = function (e) {
+            chart.toggleToneLevel(e.target.dataset.level);
+        }.bind(chart);
+        levelToggle.id = level + "Toggle";
+
+        // Create text element for the toggle button
+        var levelToggleText = document.createElement('p');
+        levelToggleText.className = "levelToggleText";
+        levelToggleText.innerHTML = (level === DOC) ? "Document" : "Sentence";
+        levelToggleText.dataset.level = level;
+        levelToggleText.onclick = function (e) {
+            chart.toggleToneLevel(e.target.dataset.level);
+        }.bind(chart);
+        levelToggle.appendChild(levelToggleText);
+
+        levelController.appendChild(levelToggle);
+    }
+
+    /**
+     * Creates key controls for the Smoothiechart
+     */
+    Chart.prototype.createControllers = function (controllerId) {
+
+        // Create the controller for doc/sentence level tone switching
+        var levelController = document.createElement('div');
+        levelController.className = "levelTogglesBox col-lg-2 col-md-2 col-sm-2";
+        addLevelController(this, levelController, DOC);
+        addLevelController(this, levelController, SENTENCE);
+
+        // Create the controller for timeseries switches
+        var controlBar = document.createElement('div');
+        controlBar.className = "controlBar col-lg-10 col-md-10 col-sm-10";
+        controlBar.id = "controlBar";
+
+        var controller = document.getElementById(controllerId);
+        controller.appendChild(levelController);
+        controller.appendChild(controlBar);
+    };
 
     // Default configuration settings for the SmoothieChart
     Chart.defaultConfigs = {
@@ -164,6 +221,7 @@
         swatch.dataset.index = index;
         swatch.dataset.mycolor = rgb;
         swatch.onclick = function (e) {
+            console.log(this)
             this.toggleTimeLine(e.target)
         }.bind(this);
 
@@ -187,7 +245,7 @@
         // Get the object representing the level of tone we are charting
         // If tracking sentence level and not present, return
         var levelTone;
-        if (this.level)
+        if (this.level === DOC)
             levelTone = tone.doc;
         else if (Util.isEmpty(tone.sentence))
             return;
@@ -218,10 +276,14 @@
      * @param {bool} true for doc, false for sentence
      */
     Chart.prototype.toggleToneLevel = function (newLevel) {
-        this.level = newLevel;
-        this.clearTimeLines();
-        var levelString = (newLevel) ? "doc" : "sentence";
-        console.log("Now tracking", levelString, "level tone");
+        if (this.level !== newLevel) {
+            this.level = newLevel;
+            this.clearTimeLines();
+            var swapLevelString = (newLevel === DOC) ? SENTENCE : DOC;
+            document.getElementById(newLevel+"Toggle").className = "levelToggle levelToggleActive"
+            document.getElementById(swapLevelString+"Toggle").className = "levelToggle"
+            console.log("Now tracking", newLevel, "level tone");
+        }
     };
 
     /**

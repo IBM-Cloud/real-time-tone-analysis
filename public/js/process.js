@@ -1,8 +1,9 @@
 var toneChart;
 window.onload = function () {
-    toneChart = new Chart('toneline', 'timeline', false, 'emotion');
+    toneChart = new Chart('toneline', 'timeline', 'sentence', 'emotion');
+    toneChart.createControllers('controller');
     toneChart.addTimeLines();
-    simulate();
+    //simulate();
 }
 
 function simulate() {
@@ -12,21 +13,27 @@ function simulate() {
 
     setInterval(function () {
 
-        var anger = Math.floor(Math.random() * (max - min + 1) + min);
-        var joy = Math.floor(Math.random() * (max - anger - min + 1) + min);
-        var disgust = Math.floor(Math.random() * (max - joy - anger - min + 1) + min);
-        var fear = Math.floor(Math.random() * (max - joy - anger - disgust - min + 1) + min);
-        var sadness = Math.floor(Math.random() * (max - joy - anger - fear - min + 1) + min);
+        var docAnger = Math.floor(Math.random() * (max - min + 1) + min);
+        var docJoy = Math.floor(Math.random() * (max - docAnger - min + 1) + min);
+        var docDisgust = Math.floor(Math.random() * (max - docJoy - docAnger - min + 1) + min);
+        var docFear = Math.floor(Math.random() * (max - docJoy - docAnger - docDisgust - min + 1) + min);
+        var docSadness = Math.floor(Math.random() * (max - docJoy - docAnger - docFear - min + 1) + min);
+
+        var senAnger = Math.floor(Math.random() * (max - min + 1) + min);
+        var senJoy = Math.floor(Math.random() * (max - senAnger - min + 1) + min);
+        var senDisgust = Math.floor(Math.random() * (max - senJoy - senAnger - min + 1) + min);
+        var senFear = Math.floor(Math.random() * (max - senJoy - senAnger - senDisgust - min + 1) + min);
+        var senSadness = Math.floor(Math.random() * (max - senJoy - senAnger - senFear - min + 1) + min);
 
         // Create dummy tone object
         var tone = {
             doc: {
                 emotion: {
-                    anger: anger,
-                    disgust: disgust,
-                    fear: fear,
-                    joy: joy,
-                    sadness: sadness
+                    anger: docAnger,
+                    disgust: docDisgust,
+                    fear: docFear,
+                    joy: docJoy,
+                    sadness: docSadness
                 },
                 writing: {
 
@@ -37,11 +44,11 @@ function simulate() {
             },
             sentence: {
                 emotion: {
-                    anger: anger,
-                    disgust: disgust,
-                    fear: fear,
-                    joy: joy,
-                    sadness: sadness
+                    anger: senAnger,
+                    disgust: senDisgust,
+                    fear: senFear,
+                    joy: senJoy,
+                    sadness: senSadness
                 },
                 writing: {
 
