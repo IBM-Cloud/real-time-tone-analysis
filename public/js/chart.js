@@ -5,8 +5,13 @@
         WRITING = 'writing',
         SOCIAL = 'social';
 
+    // Tone Level Constants
     var DOC = 'document',
         SENTENCE = 'sentence';
+
+    var LEFT = 'left',
+        MIDDLE = 'middle',
+        RIGHT = 'right';
 
     // Tone Timeline Style Constants
     var LINE_WIDTH = 3,
@@ -75,23 +80,50 @@
         this.canvas.id = id;
         anchor.appendChild(this.canvas);
         this.chart.streamTo(this.canvas);
-
-        // Create the control key for the Smoothiechart
-        var controller = document.createElement('div');
-        controller.id = controller.className = "controller";
-        anchor.appendChild(controller);
     }
 
     /**
-     * Initializes a chart object with a canvas and timeseries
+     * Adds a controller to the type toggle box
+     * @param {Chart} chart object the key controller will manipulate
      * @param {Element} div element containing the controllers
-     * @param {bool} true for doc, false for sentence
+     * @param {string} type toggle being added
+     * @param {int} 1 for first, 2 for middle, 3 for last
+     */
+    function addTypeController(chart, typeButtons, type, position, text) {
+        // Create the toggle div
+        var typeToggle = document.createElement('a');
+        var typeActiveClass;
+        if (chart.type === EMOTION)
+            typeActiveClass = (type === EMOTION) ? "switch-button-active " : "switch-button-disabled ";
+        else if (chart.type === WRITING)
+            typeActiveClass = (type === WRITING) ? "switch-button-active " : "switch-button-disabled ";
+        else
+            typeActiveClass = (type === SOCIAL) ? "switch-button-active " : "switch-button-disabled ";
+        typeActiveClass += position + "-type-switch ";
+        typeToggle.id = type + "Toggle";
+        typeToggle.className = typeActiveClass + "type-btn " + type + "-switch";
+        typeToggle.innerHTML = text;
+        typeToggle.dataset.type = type;
+        typeToggle.dataset.position = position;
+        typeToggle.onclick = function (e) {
+            chart.toggleToneType(e.target.dataset.type, e.target.dataset.position);
+        }.bind(chart);
+        typeToggle.id = type + "Toggle";
+
+        typeButtons.appendChild(typeToggle);
+    }
+
+    /**
+     * Adds a controller to the level toggle box
+     * @param {Chart} chart object the key controller will manipulate
+     * @param {Element} div element containing the controllers
+     * @param {string} level toggle being added
      */
     function addLevelController(chart, levelController, level) {
         // Create the toggle div
         var levelToggle = document.createElement('div');
         var levelToggleClass;
-        if (this.level === DOC)
+        if (chart.level === DOC)
             levelToggleClass = (level === DOC) ? "levelToggle levelToggleActive" : "levelToggle";
         else
             levelToggleClass = (level === DOC) ? "levelToggle" : "levelToggle levelToggleActive";
@@ -116,24 +148,45 @@
     }
 
     /**
-     * Creates key controls for the Smoothiechart
+     * Creates controllers for the tone type, level, and individual timeseries
      */
-    Chart.prototype.createControllers = function (controllerId) {
+    Chart.prototype.createControllers = function (anchorId) {
+
+        // Create controller for the tone type
+        var typeController = document.createElement('div');
+        typeController.className = "col-sm-offset-3 col-xs-offset-1 col-sm-6 col-xs-10";
+        var typeButtons = document.createElement('div');
+        typeButtons.className = "type-buttons";
+        addTypeController(this, typeButtons, EMOTION, LEFT, "Emotion");
+        addTypeController(this, typeButtons, SOCIAL, MIDDLE, "Social");
+        addTypeController(this, typeButtons, WRITING, RIGHT, "Writing");
+
+        // Insert node before the canvas element
+        var anchor = document.getElementById(anchorId);
+        typeController.appendChild(typeButtons);
+        anchor.insertBefore(typeController, anchor.firstChild);
+
+        // Create the control key for the Smoothiechart
+        var controller = document.createElement('div');
+        controller.id = controller.className = "controller";
 
         // Create the controller for doc/sentence level tone switching
         var levelController = document.createElement('div');
-        levelController.className = "levelTogglesBox col-lg-2 col-md-2 col-sm-2";
+        levelController.className = "levelTogglesBox col-sm-2";
         addLevelController(this, levelController, DOC);
         addLevelController(this, levelController, SENTENCE);
 
         // Create the controller for timeseries switches
         var controlBar = document.createElement('div');
-        controlBar.className = "controlBar col-lg-10 col-md-10 col-sm-10";
+        controlBar.className = "controlBar col-sm-10";
         controlBar.id = "controlBar";
+        var controlRow = document.createElement('div');
+        controlRow.className = "row controlRow";
+        controlBar.appendChild(controlRow);
 
-        var controller = document.getElementById(controllerId);
         controller.appendChild(levelController);
         controller.appendChild(controlBar);
+        anchor.appendChild(controller);
     };
 
     // Default configuration settings for the SmoothieChart
@@ -181,7 +234,7 @@
             this.chart.addTimeSeries(this.timelines[tones[i]], createTimeSeriesOptions(tones[i], i));
 
             // Add a timeseries control element to the key
-            this.addControl(i, tones[i]);
+            this.addControl(i, tones[i], tones.length);
         }
     };
 
@@ -204,12 +257,14 @@
     /**
      * Adds a timeseries control to the Smoothiechart control bar
      */
-    Chart.prototype.addControl = function (index, trait) {
+    Chart.prototype.addControl = function (index, trait, length) {
 
         var rgb = "rgb(" + TIMELINES_STYLES[index][0] + "," + TIMELINES_STYLES[index][1] + "," + TIMELINES_STYLES[index][2] + ")";
 
         var toggle = document.createElement('div');
-        toggle.className = "toneControl";
+        var colClass = "col-sm-" + (Math.floor(12/length));
+        if (index==0 && 12 % length) colClass += " col-sm-offset-" + (Math.floor((12 % length)/2));
+        toggle.className = "toneControl " + colClass;
 
         // Creat a control element for toggling the timeseries line
         var swatch = document.createElement('div');
@@ -228,13 +283,13 @@
         // Create a label for the timeseries control
         var label = document.createElement('label');
         label.className = "toneLabel";
-        label.innerHTML = trait;
+        label.innerHTML = trait.split("_")[0];
         label.color = rgb;
 
         // Add control elements to the DOM
         toggle.appendChild(swatch)
         toggle.appendChild(label);
-        document.getElementById('controlBar').appendChild(toggle);
+        document.getElementById('controlBar').firstChild.appendChild(toggle);
     }
 
     /**
@@ -242,6 +297,7 @@
      * @param {Object} holds the doc and sentence tone for all types
      */
     Chart.prototype.plotTone = function (tone) {
+        console.log(tone)
         // Get the object representing the level of tone we are charting
         // If tracking sentence level and not present, return
         var levelTone;
@@ -273,7 +329,7 @@
 
     /**
      * Toggles the plot level between doc and sentence tone
-     * @param {bool} true for doc, false for sentence
+     * @param {string} the new tone level
      */
     Chart.prototype.toggleToneLevel = function (newLevel) {
         if (this.level !== newLevel) {
@@ -290,16 +346,57 @@
      * Toggles the tone type that we are charting
      * @param {string} 'emotion', 'writing', or 'social'
      */
-    Chart.prototype.toggleToneType = function (newType) {
+    Chart.prototype.toggleToneType = function (newType, position) {
         // Only accept valid type
-        if (newType === EMOTION || newType === WRITING || newType === SOCIAL) {
-            this.type = newType;
-            console.log("Now tracking", newType, "tone");
+        if (this.type !== newType) {
+            if (newType === EMOTION || newType === WRITING || newType === SOCIAL) {
+                this.type = newType;
 
-            this.removeTimeLines();
-            this.addTimeLines();
-        } else
-            console.error("Attempted to change to invalid tone type");
+                this.removeTimeLines();
+                this.addTimeLines();
+
+                // Change classes
+                var eSwitch = document.getElementById(EMOTION+"Toggle"),
+                    sSwitch = document.getElementById(SOCIAL+"Toggle"),
+                    wSwitch = document.getElementById(WRITING+"Toggle");
+                if (newType === EMOTION) {
+                    eSwitch.className = "switch-button-active " + 
+                                        eSwitch.dataset.position + "-type-switch type-btn " + 
+                                        eSwitch.dataset.type + "-switch";
+                    sSwitch.className = "switch-button-disabled " + 
+                                        sSwitch.dataset.position + "-type-switch type-btn " + 
+                                        sSwitch.dataset.type + "-switch";
+                    wSwitch.className = "switch-button-disabled " + 
+                                        wSwitch.dataset.position + "-type-switch type-btn " + 
+                                        wSwitch.dataset.type + "-switch";
+                }
+                else if (newType === SOCIAL) {
+                    eSwitch.className = "switch-button-disabled " + 
+                                        eSwitch.dataset.position + "-type-switch type-btn " + 
+                                        eSwitch.dataset.type + "-switch";
+                    sSwitch.className = "switch-button-active " + 
+                                        sSwitch.dataset.position + "-type-switch type-btn " + 
+                                        sSwitch.dataset.type + "-switch";
+                    wSwitch.className = "switch-button-disabled " + 
+                                        wSwitch.dataset.position + "-type-switch type-btn " + 
+                                        wSwitch.dataset.type + "-switch";
+                }
+
+                else if (newType === WRITING) {
+                    eSwitch.className = "switch-button-disabled " + 
+                                        eSwitch.dataset.position + "-type-switch type-btn " + 
+                                        eSwitch.dataset.type + "-switch";
+                    sSwitch.className = "switch-button-disabled " + 
+                                        sSwitch.dataset.position + "-type-switch type-btn " + 
+                                        sSwitch.dataset.type + "-switch";
+                    wSwitch.className = "switch-button-active " + 
+                                        wSwitch.dataset.position + "-type-switch type-btn " + 
+                                        wSwitch.dataset.type + "-switch";
+                }
+                console.log("Now tracking", newType, "tone");
+            } else
+                console.error("Attempted to change to invalid tone type");
+        }
     };
 
     /**
@@ -314,11 +411,15 @@
     };
 
     /**
-     * Removes all timelines currently in the chart
+     * Removes all timelines and their controls
      */
     Chart.prototype.removeTimeLines = function () {
         this.clearTimeLines();
         this.timelines = [];
+        var controlBar = document.getElementById('controlBar');
+        while (controlBar.firstChild.firstChild) {
+            controlBar.firstChild.removeChild(controlBar.firstChild.firstChild);
+}
     };
 
     exports.Chart = Chart;
