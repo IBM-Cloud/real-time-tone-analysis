@@ -12,7 +12,7 @@ Welcome to the Real Time Tone Analysis workshop! In this workshop, you will lear
 
 5. **Real Time Plotting** - This section puts our Watson results to good use by expanding the UI to provide real time cognitive feedback.
 
-## Prerequisites
+## [Prerequisites](https://ibm.box.com/s/brq6qumkzqfu29hm96tgw8vfa0pcpk1k)
 
 1. The [Cloud Foundry Command Line Interface][cf_cli_url]
 2. [Node.js][node_download_url] & npm
