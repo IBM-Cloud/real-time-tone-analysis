@@ -18,14 +18,14 @@ In step 2 and 3, we added and bound a service through the Bluemix UI. However, w
   $ cf bind-service realtime-tone rtt-tone-analyzer
   ```
 
-Simple as that! We still need to a _a little_ work to get it going in our app, though.
+Simple as that! We still need to a _a little_ work to get it going in our app.
 
 ## Implementing Tone Analysis
 
 1. First, we need to update [`app.js`](./app.js) with routes to handle requests for tone analysis
 
 	```
-	// Configure Watson Speech to Text service
+	// Configure Watson Tone Analyzer service
 	var toneCreds = getServiceCreds(appEnv, 'rtt-tone-analyzer');
 	toneCreds.version = 'v3-beta';
 	toneCreds.version_date = '2016-11-02';
@@ -58,14 +58,28 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
 	 * Converts a tone category into a flat object with tone values
 	 * @param {Object} tone category returned from API
 	 */
-	function getToneValues(tone_category) {
+	function getToneValues(toneCategory) {
 	  var tone = {
-	    id: tone_category.category_id
+	    id: toneCategory.category_id
 	  };
-	  for (var i=0; i < tone_category.tones.length; i++)
-	    tone[tone_category.tones[i].tone_id] = +((tone_category.tones[i].score * 100).toFixed(2));
+	  toneCategory.tones.forEach(function(toneValue) {
+	    tone[toneValue.tone_id] = +((toneValue.score * 100).toFixed(2));
+	  });
 	
 	  return tone;
+	}
+	
+	/**
+	 * Converts a set of tones into flat objects
+	 * Assumes tone ids will be structured like 'category_id'
+	 * @param {Object} tone level returned from API
+	 */
+	function getTones(tone) {
+	  var tones = {};
+	  tone.tone_categories.forEach(function(category) {
+	    tones[category.category_id.split("_")[0]] = getToneValues(category);
+	  });
+	  return tones;
 	}
 	
 	/**
@@ -74,24 +88,16 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
 	 */
 	function toneCallback(data) {
 	  var tone = {
-	    doc: {},
+	    document: {},
 	    sentence: {}
 	  };
 	
 	  // Results for the updated full transcript's tone
-	  tone.doc.emotion = getToneValues(data.document_tone.tone_categories[0]),
-	  tone.doc.writing = getToneValues(data.document_tone.tone_categories[1]),
-	  tone.doc.social = getToneValues(data.document_tone.tone_categories[2]);
+	  tone.document = getTones(data.document_tone);
 	
 	  // Results for the latest sentence's tone
-	  if (data.sentences_tone) {
-	    var numSentences = data.sentences_tone.length - 1;
-	    if (data.sentences_tone[numSentences].tone_categories.length) {
-	      tone.sentence.emotion = getToneValues(data.sentences_tone[numSentences].tone_categories[0]);
-	      tone.sentence.writing = getToneValues(data.sentences_tone[numSentences].tone_categories[1]);
-	      tone.sentence.social = getToneValues(data.sentences_tone[numSentences].tone_categories[2]);
-	    }
-	  }
+	  if (data.sentences_tone && data.sentences_tone[data.sentences_tone.length - 1].tone_categories.length)
+	      tone.sentence = getTones(data.sentences_tone[data.sentences_tone.length - 1]);
 	
 	  console.log(tone);
 	}
@@ -110,7 +116,7 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
 	```
 	Calling the `getToneAnalysis()` method will invoke the Tone Analyzer service and get back document and sentence level tone for the input text. We then take the response and parse out the overall document and last sentence's tone and print it to the console.
 
-3. Update [`public/indes.html`](./public/index.html) to call this new script
+3. Update [`public/index.html`](./public/index.html) to call this new script
 
 	```
     <script type="text/javascript" src="js/tone.js"></script>
@@ -158,11 +164,11 @@ Simple as that! We still need to a _a little_ work to get it going in our app, t
 
 7. Test locally
 
-Great! We're now analyzing the text coming back from the Speech to text service. We'll want to save the tone analysis results that along with the output text. Let's make some updates for that.
+Great! We're now analyzing the text coming back from the Speech to text service and we can see the results in our browser's dev console. We'll want to save the tone analysis results that along with the output text. Let's make some updates for that.
 
 ## Saving the Tone Analysis
 
-1. Update [`public/index.html`](./public/index.html) to include a field for the tone analysis JSON in the save modal
+1. Update [`public/index.html`](./public/index.html) to include fields for the tone analysis in the save modal
 
 	```
 	<div class="form-group">
@@ -183,11 +189,18 @@ Great! We're now analyzing the text coming back from the Speech to text service.
 3. Update the [`public/js/save.js`](./public/js/save.js) file to grab the `lastToneResult` and save it along with the StT results.
 
 	```
-	// Get last tone data in prepareDataForSave()
-	$("#jsonToSave").val(JSON.stringify(lastToneResult.doc, null, ' '));
+	if (lastToneResult) {
+		$("#toneLevelToSave").val('document');
+		$("#toneValueToSave").val(JSON.stringify(lastToneResult.doc, null, ' '));
+	}
 	...
 	// Add the TA JSON to the API POST call data in saveData()
-	dataToSend.json = JSON.parse($("#jsonToSave").val());
+	var dataToSend = {
+		name: $("#nameToSave").val(),
+		transcription: $("#textToSave").val(),
+		toneLevel: $("#toneLevelToSave").val(),
+		toneValue: $("#toneValueToSave").val(),
+	};
 	```
 
 4. Test locally

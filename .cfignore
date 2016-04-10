@@ -1,9 +1,9 @@
 *.log
+*.DS_STORE
 WORKSHOP/
 node_modules/
 bower_components/
 public/vendor/
 design/
-.DS_STORE
 README.md
 vcap-local.json

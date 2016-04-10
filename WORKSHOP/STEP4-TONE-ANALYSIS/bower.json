@@ -1,0 +1,14 @@
+{
+  "name": "realtime-tone",
+  "version": "1.0.0",
+  "private": false,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/vendor"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.x",
+    "jquery": "1.11.3"
+  }
+}

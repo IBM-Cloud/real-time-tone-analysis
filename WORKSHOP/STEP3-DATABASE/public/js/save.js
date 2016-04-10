@@ -6,11 +6,11 @@ function prepareDataForSave(){
 
 //Send the data to the API.
 function saveData(){
-	var dataToSend = {};
-
 	//Get data from Save form
-	dataToSend.name = $("#nameToSave").val();
-	dataToSend.text = $("#textToSave").val();
+	var dataToSend = {
+		name: $("#nameToSave").val(),
+		transcription: $("#textToSave").val()
+	};
 
 	//POST request to API
 	$.post( "http://cloudantAPI-USERNAME.mybluemix.net/api/items", dataToSend,function( data ) {

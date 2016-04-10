@@ -1,7 +1,12 @@
 //Fill out the fields in the Save form
 function prepareDataForSave(){
-  // Get last tone data in prepareDataForSave()
-  $("#jsonToSave").val(JSON.stringify(lastToneResult.doc, null, ' '));
+	//Get last tone data result
+	var tone = toneChart.getTone();
+	if (tone) {
+		$("#toneTypeToSave").val(toneChart.getToneType());
+		$("#toneLevelToSave").val(toneChart.getToneLevel());
+		$("#toneValueToSave").val(JSON.stringify(toneChart.getTone()[toneChart.getToneLevel()][toneChart.getToneType()], null, ' '));
+	}
 
 	//Get text
 	$("#textToSave").val($("#resultsText").val());
@@ -9,12 +14,14 @@ function prepareDataForSave(){
 
 //Send the data to the API.
 function saveData(){
-	var dataToSend = {};
-
 	//Get data from Save form
-	dataToSend.name = $("#nameToSave").val();
-	dataToSend.text = $("#textToSave").val();
-  dataToSend.json = JSON.parse($("#jsonToSave").val());
+	var dataToSend = {
+		name: $("#nameToSave").val(),
+		transcription: $("#textToSave").val(),
+		toneType: $("#toneTypeToSave").val(),
+		toneLevel: $("#toneLevelToSave").val(),
+		toneValue: $("#toneValueToSave").val(),
+	};
 
 	//POST request to API
 	$.post( "http://cloudantAPI-USERNAME.mybluemix.net/api/items", dataToSend,function( data ) {

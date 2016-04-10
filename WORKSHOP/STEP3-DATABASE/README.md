@@ -1,6 +1,6 @@
 # Step 3: Creating a Database API
 
-We have our base application working at this point. We have a Node.js back end running on Bluemix, a stylized front end which handles client-side interaction, and Watson SaaS to help us transcribe the user's speech. However, we are missing a core component of any application: the datastore. We need to be able to persist dat. Right now, our transcripts are dissapearing into the ether after every session. This step will lay out how easy it is to not only create a database on Bluemix, but to interface with it by wrapping it in a simple RESTful [Loopback API][loopback_url].
+We have our base application working at this point. We have a Node.js back end running on Bluemix, a stylized front end which handles client-side interaction, and Watson SaaS to help us transcribe the user's speech. However, we are missing a core component of any application: the datastore. We need to be able to persist data. Right now, our transcripts are dissapearing into the ether after every session. This step will lay out how easy it is to not only create a database on Bluemix, but to interface with it by wrapping it in a simple RESTful [Loopback API][loopback_url].
 
 ## Creating the Loopback API
 
@@ -46,7 +46,7 @@ Your API is ready, but it's currently using an in-memory database. If you restar
 
 ## Creating the Cloudant Database
 
-1. Update `server/datasources.json` to just:
+1. Update [`server/datasources.json`](./myLoopbackAPI/server/datasources.json) to just:
 
 	```
 	{ }
@@ -203,14 +203,14 @@ Let's update our `realtime-tone` app now so that it leverages this new Cloudant 
 	
 	//Send the data to the API.
 	function saveData(){
-		var dataToSend = {};
-	
 		//Get data from Save form
-		dataToSend.name = $("#nameToSave").val();
-		dataToSend.text = $("#textToSave").val();
+		var dataToSend = {
+			name: $("#nameToSave").val(),
+			transcription: $("#textToSave").val()
+		};
 	
 		//POST request to API
-		$.post( "http://nodejsloopbackapi.mybluemix.net/api/items", dataToSend,function( data ) {
+		$.post( "http://cloudantAPI-USERNAME.mybluemix.net/api/items", dataToSend,function( data ) {
 		  console.log("Save result:", data );
 		}).fail(function() {
 	    alert( "Error saving data" );

@@ -1,3 +1,11 @@
+---
+declared-services:
+  rtt-speech-to-text:
+    label: speech_to_text
+    plan: standard
+  rtt-tone-analyzer:
+    label: tone_analyzer
+    plan: beta
 applications:
 - name: realtime-tone
   host: realtime-tone-USERNAME
@@ -6,3 +14,6 @@ applications:
   path: .
   command: node app.js
   disk_quota: 1024M
+  services:
+  - rtt-speech-to-text
+  - rtt-tone-analyzer

@@ -24,7 +24,7 @@ The first thing we need to do is provision a Watson service. Each [Cloud Foundry
 
 Watson is many things, but for most developers, it is simply MLaaS: Machine Learning as a Service. The [Watson Developer Cloud][wdc_url] contains a number of APIs that give developers the ability to leverage cognitive computing in their apps without implementing (or understanding) the necessary underlying systems.
 
-If you're like me, you understand the use case services better when you see them in action. Let's check our some examples:
+If you're like me, you understand the service use cases better when you see them in action. Let's check our some examples:
 
 * [Concept Insights][watson_ci_demo] allows you to discover content which may or may not be found using a traditional keyword search.
 * The [Natural Language Classifier][watson_nlc_demo] service applies deep learning techniques to make predictions about the best predefined classes for short sentences or phrases. The classes can trigger a corresponding action in an application, such as directing a request to a location or person, or answering a question. After training, the service returns information for texts that it hasn't seen before.
@@ -43,7 +43,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	$ npm install watson-developer-cloud --save
 	```
 
-2. Next, we will update our [`app.js`](./app.js) file to leverage this module
+2. Next, we will update our [`app.js`](./app.js) file to leverage this module with the credentials from the service we just created
 
 	```
 	var express   = require('express'),
@@ -51,7 +51,6 @@ Now that we understand what Watson does and have seen several use cases, let's s
 		bodyParser  = require('body-parser'),
 		cfenv       = require('cfenv'), //*****<-- Replace ; with a ,
 		watson      = require('watson-developer-cloud'); //*****<-- Add this
-	...
 	...
 	...
 	...
@@ -102,15 +101,16 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	```
 	Everything looks in order. Let's proceed and import the code that is going to run the speech to text transcription logic behind the scenes.
 	
-8. Import the `src/` folder into the root directory. This contains the client-side code that will handle microphone interaction, sample file streaming, and client-server communication via sockets.
+8. Copy the `src/` folder into the root directory. This contains the client-side code that will handle microphone interaction, sample file streaming, and client-server communication via sockets.
 
-9. We are going to compile these files with [browserify][browserify_url] to create the `public/js/index.js` file. To do this, we first need to add several parameters to [`package.json`](./package.json) so that this same process occurs when we push our app to Bluemix
+9. We are going to compile and concatenate these files with [browserify][browserify_url] to create the [`public/js/index.js`](./public/js/index.js) file. To do this, we first need to add several parameters to [`package.json`](./package.json) so that this same process occurs when we push our app to Bluemix
 	
 	```
 	"scripts": {
 		"start": "node app.js",
 		"build": "browserify src/index.js | uglifyjs -nc > public/js/index.js",
-		"watch": "watchify -v -d -o public/js/index.js src/index.js"
+		"watch": "watchify -v -d -o public/js/index.js src/index.js",
+		"postinstall": "bower install --alow-root && gulp"
 	},
 	"devDependencies": {
 		"browserify": "^12.0.1",
@@ -127,6 +127,46 @@ Now that we understand what Watson does and have seen several use cases, let's s
 		]
 	},
 	```
+	You'll notice that we also added a command that uses [bower][bower_url] and [gulp.js][gulp_url], a front end package manager and task runner, respectively. Let's run the following command to add them to our dependencies
+	
+	```
+	$ npm install bower@1.6.x gulp@3.5.x --save
+	```
+	When these tools execute, we need to give them scripts to execute. For this we will create the [`bower.json`](./bower.json) and [`gulpfile.js`](./gulpfile.js) files
+
+	```
+	{
+	  "name": "realtime-tone",
+	  "version": "1.0.0",
+	  "private": false,
+	  "ignore": [
+	    "**/.*",
+	    "node_modules",
+	    "public/vendor"
+	  ],
+	  "dependencies": {
+	    "bootstrap": "3.3.x",
+	    "jquery": "1.11.3"
+	  }
+	}
+	```
+ 	```
+ 	var gulp = require('gulp');
+
+	// Grab js files from bower_components and add them to public/vendor
+	gulp.task('bootstrap', function() {
+	    return gulp.src('bower_components/bootstrap/dist/js/bootstrap.min.js')
+	      .pipe(gulp.dest('public/vendor/bootstrap'));
+	});
+	gulp.task('jquery', function() {
+	    return gulp.src('bower_components/jquery/dist/*.min.*')
+	      .pipe(gulp.dest('public/vendor/jquery'));
+	});
+	
+	// Default Task
+	gulp.task('default', ['bootstrap','jquery']);
+ 	```
+	
 	After that is done, execute the following commands
 	
 	```
@@ -138,9 +178,9 @@ Now that we understand what Watson does and have seen several use cases, let's s
 10. Update your [`public/index.html`](./public/index.html) file again to call this and several other dependent scripts
 
 	```
-	<!-- Place js files at the end of the document, with fallbacks for CDNs -->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<!-- Place js files at the end of the document -->
+    <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap/bootstrap.min.js"></script>
     <script src="js/index.js"></script>
 	```
 
@@ -153,7 +193,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	```
 
 ## Developing Locally with VCAP_SERVICES
-Now, you're probably wondering if we are going to insert credentials into the app.js, but we don't want to hard-code the credentials for the Speech to Text API directly into our `app.js` file. This is obviously not a good practice when developing our apps, particularly when it comes to source code management.
+Now, you were probably wondering why we inserted our credentials for the Speech to Text API directly into our `app.js` file. This is obviously not a good practice when developing our apps, particularly when it comes to source code management.
 
 When running in Bluemix, the credentials of any services that are bound to the application are passed in via the VCAP_SERVICES environement variable. Since these credentials will be accessible as environment variables when the app is running on Bluemix, we want to emulate this behavior when running locally. To create this environment parity between Bluemix and our local machines, we will use the `cfenv` Node.js package.
 
@@ -213,7 +253,7 @@ When running in Bluemix, the credentials of any services that are bound to the a
 	}
 	```
 
-3. Update your [`.cfignore`](./.cfignore) file to include `vcap-local.json` and the `src/` folder
+3. Update your [`.cfignore`](./.cfignore) file to include this `vcap-local.json` file, as well as the `src/`, `bower_components/`, and `public/vendor/` folders
 
 Now that we have our first service connected, we will next walk through hooking up our app to a database...
 
@@ -226,4 +266,6 @@ Now that we have our first service connected, we will next walk through hooking 
 [watson_pi_demo]: https://runkeeper-hashmatch.mybluemix.net/
 [watson_alchemy_demo]: http://vision.alchemy.ai/#demo
 [browserify_url]: http://browserify.org/
+[bower_url]: http://bower.io/
+[gulp_url]: http://gulpjs.com/
 

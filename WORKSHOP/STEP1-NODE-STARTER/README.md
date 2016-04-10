@@ -28,7 +28,7 @@ The following are our goals for you, the developer, to achieve by the end of thi
 
 ## Running the app locally
 
-Now we're going to begin with a basic workflow. We'll make the app run locally on our computers, change things a little, and then upload the app to the cloud.
+Now we're going to begin with a basic workflow. We'll make the app run locally on our computers, change things a little, and then upload the app back to the cloud.
 
 1. First let's spend some time learning about `npm`, the Node.js package manager. We'll explore a few packages for databases, social media, algorithms and managing dependencies via `package.json` ... then we'll see it in action.
 
@@ -85,11 +85,16 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 	</body>
 	```
 
-6. Copy over the expanded [`style.css`](./public/stylesheets/style.css) stylesheet and the [`images`] folder so that everything looks beautiful
+6. Copy over the expanded [`style.css`](./public/stylesheets/style.css) stylesheet and the [`images`] (./public/images/)folder so that everything looks beautiful
 
 7. Finally, let's bring the [`app.js`](./app.js) file in line for future updates. Once you finish this, fire up the app again locally to see your changes
 
-8. Using the cf command line, login, and then let's deploy our app
+8. Before we push our updated app back to Bluemix, let's explore the [`.cfignore`](./.cfignore) and [`manifest.yml`](./manifest.yml) files, two of the files used in the Cloud Foundry deployment process
+
+	* **cfignore** - Similar to a `.gitignore` file, we use this file to tell Cloud Foundry to ignore certain files and foldrs in our app's root and nested folders
+	* **manifest** - This file allows us to explicitly list deployment options in order to ensure consistent and reproducible deployments. Read more details in the [Cloud Foundry documentation](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html)
+
+9. Login using the cf command line and then let's deploy our app
 
 	```
 	$ cf login -a https://api.ng.bluemix.net
@@ -98,16 +103,16 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 	$ cf push
 	```
 
-9. Now that our app is deploying, let's check the logs to make sure everything is going smoothly. We can do this in several ways:
+10. Now that our app is deploying, let's check the logs to make sure everything is going smoothly. We can do this in several ways:
 	* Navigate to the 'Logs' section in your app's dashboard in the Bluemix UI
 	* Get the logs using the CF CLI
 
 	```
 	$ cf logs realtime-tone --recent
 	```
-10. Let's play with some `console.log()` and `console.error()` statements to see how these might help us debug
+11. Let's play with some `console.log()` and `console.error()` statements to see how these might help us debug
 
-And those are the basics of Node.js development using Bluemix. Easy enough, but that was just the grounding we needed for the next step ... adding our first service ...
+And those are the basics of Node.js development using Bluemix. Easy enough, but that was just the grounding we needed for the next step: adding our first service ...
 
 <!--Links-->
 [github_url]: https://github.com/
