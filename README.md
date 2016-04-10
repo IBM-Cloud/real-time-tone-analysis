@@ -1,6 +1,6 @@
 # real-time-tone-analysis Overview
 
-Real Time Tone Analysis samples dictation or conversations and displays a working timeline that plots the tone of the language spoken.
+Real Time Tone Analysis samples dictation or conversations and displays a real-time transcription and an accompanying chart that plots the emotional, social, and writing tone of the language.
 
 The project is an experiment that combines the Watson [Speech to Text][speech_service_url] and [Tone Analysis][tone_service_url] services, integrating them in a node.js backend running on [IBM Bluemix][bluemix_url].
 
@@ -64,25 +64,31 @@ And voila! You now have your very own instance of Real Time Tone running on Blue
 ## Run the app locally
 1. If you do not already have a Bluemix account, [sign up here][bluemix_signup_url]
 
-2. If you have not already, [download node.js][download_node_url] and install it on your local machine.
+2. If you have not already, [download node.js][download_node_url] and install it on your local machine
 
-3. Clone the app to your local environment from your terminal using the following command:
+3. You must also have [gulp.js][gulp_url] installed to run some post-install tasks
+
+	```
+	npm install -g gulp
+	```
+
+4. Clone the app to your local environment from your terminal using the following command:
 
   ```
   git clone https://github.com/IBM-Bluemix/real-time-tone-analysis.git
   ```
 
-4. `cd` into this newly created directory
+5. `cd` into this newly created directory
 
-5. Install the required npm packages using the following command
+6. Install the required npm and bower packages using the following command
 
   ```
   npm install
   ```
 
-6. Create a [Speech to Text service][speech_service_bluemix_url] and a [Tone Analyzer service][tone_service_bluemix_url] using your Bluemix account. Once you've done this, provision credentials for each service and use them to populate the corresponding parameters in your `vcap-local.json` file.
+7. Create a [Speech to Text service][speech_service_bluemix_url] and a [Tone Analyzer service][tone_service_bluemix_url] using your Bluemix account. Once you've done this, provision credentials for each service and use them to populate the corresponding parameters in your `vcap-local.json` file.
 
-7. Build the app code necessary for speech-to-text using [Browserify][browserify_url]
+8. Build the app code necessary for speech-to-text using [Browserify][browserify_url]
 
   ```
   npm run build
@@ -109,7 +115,7 @@ For more detailed information on troubleshooting your application, see the [Trou
 We are more than happy to accept external contributions to this project, be it in the form of issues and pull requests. If you find a bug, please report it via the [Issues section][issues_url] or even better, fork the project and submit a pull request with your fix! Pull requests will be evaulated on an individual basis based on value add to the sample application.
 
 ## Privacy Notice
-The capital-weather sample web application includes code to track deployments to Bluemix and other Cloud Foundry platforms. The following information is sent to a [Deployment Tracker](https://github.com/cloudant-labs/deployment-tracker) service on each deployment:
+The real-time-tone-analysis sample web application includes code to track deployments to Bluemix and other Cloud Foundry platforms. The following information is sent to a [Deployment Tracker](https://github.com/cloudant-labs/deployment-tracker) service on each deployment:
 
 * Application Name (application_name)
 * Space ID (space_id)
@@ -131,5 +137,6 @@ Deployment tracking can be disabled by removing `require("cf-deployment-tracker-
 [bluemix_signup_url]: http://ibm.biz/realtime-tone-signup
 [cloud_foundry_url]: https://github.com/cloudfoundry/cli
 [download_node_url]: https://nodejs.org/download/
+[gulp_url]: http://gulpjs.com/
 [browserify_url]: http://browserify.org/
 [issues_url]: https://github.com/IBM-Bluemix/real-time-tone-analysis/issues

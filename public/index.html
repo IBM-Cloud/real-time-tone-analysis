@@ -48,7 +48,7 @@
             <!--Non Supported Audio Notifier-->
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12">
-                    <div class="audioParent">
+                    <div class="audio-parent">
                         <audio style="display:none" class="audio" controls>
                             Your browser does not support the audio element.
                         </audio>
@@ -132,7 +132,7 @@
             <!-- /.tabpanel -->
 
             <div class="row">
-                <div id="timeline" class="col-md-12">
+                <div id="timeLine" class="col-md-12">
                     <!-- smoothie chart -->
 
                 </div>
@@ -209,7 +209,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="usr">Name:</label>
-                            <input type="text" class="form-control" id="nameToSave" value = "John Doe">
+                            <input type="text" class="form-control" id="nameToSave" placeholder="John Doe">
                         </div>
 
                         <div class="form-group">
@@ -218,8 +218,18 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="usr">Result:</label>
-                            <textarea class="form-control" style = "height:100px" readonly id="jsonToSave" dir="auto"></textarea>
+                            <label for="usr">Tone Type:</label>
+                            <input type="text" class="form-control" readonly id="toneTypeToSave">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="usr">Tone Level:</label>
+                            <input type="text" class="form-control" readonly id="toneLevelToSave">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="usr">Tone Result:</label>
+                            <textarea class="form-control" style = "height:100px" readonly id="toneValueToSave" dir="auto"></textarea>
                         </div>
                     </div>
 
@@ -240,23 +250,24 @@
     <div class="footer">
         <div class="footer-container">
             <div>
-                <img class="footerImage" src="images/watson-logo.png">
+                <img class="footer-image" src="images/watson-logo.png">
             </div>
             <div class="baseline">
                 <span>Built on <a href="http://ibm.biz/realtime-tone-bluemix" target="_blank">IBM Bluemix</a> | Source code on <a href="https://github.com/IBM-Bluemix/real-time-tone-analysis/" target="_blank">GitHub</a></span>
                 <span>Compatible with <a href="https://www.google.com/intl/en/chrome/browser/desktop/" target="_blank">Google Chrome</a> and <a href="https://www.mozilla.org/en-US/firefox/new/" target="_blank">Mozilla Firefox</a></span>
             </div>
             <div>
-                <img class="footerImage" src="images/bluemix-logo.png">
+                <img class="footer-image" src="images/bluemix-logo.png">
             </div>
         </div>
     </div>
     <!-- /.footer -->
 
     <!-- Place js files at the end of the document, with fallbacks for CDNs -->
-    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="js/index.js"></script>
+    <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/javascript-detect-element-resize/detect-element-resize.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
     <script type="text/javascript" src="js/smoothie.js"></script>
     <script type="text/javascript" src="js/chart.js"></script>
     <script type="text/javascript" src="js/tone.js"></script>

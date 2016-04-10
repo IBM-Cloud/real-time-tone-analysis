@@ -1,17 +1,20 @@
 {
 	"name": "realtime-tone",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description": "Analyze the tone of spoken words in real time using Bluemix and Watson",
 	"scripts": {
 		"start": "node app.js",
     "build": "browserify src/index.js | uglifyjs -nc > public/js/index.js",
-    "watch": "watchify -v -d -o public/js/index.js src/index.js"
+    "watch": "watchify -v -d -o public/js/index.js src/index.js",
+    "postinstall": "bower install --alow-root && gulp"
 	},
 	"dependencies": {
 		"express": "4.13.x",
     "body-parser": "1.14.x",
     "watson-developer-cloud": "1.2.x",
 		"cfenv": "1.0.x",
+    "bower": "1.6.x",
+    "gulp": "3.5.x",
     "cf-deployment-tracker-client": "0.0.x"
 	},
   "devDependencies": {

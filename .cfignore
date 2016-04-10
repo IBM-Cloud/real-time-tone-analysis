@@ -1,5 +1,7 @@
 *.log
+WORKSHOP/
 node_modules/
+bower_components/
 public/vendor/
 design/
 .DS_STORE

@@ -26,13 +26,7 @@ html {
 
 .nav-label {
     color: white;
-}
-
-.navbar-text {
-    overflow: hidden;
-    white-space: nowrap;
-    margin: 0;
-    padding: 0;
+    vertical-align: middle;
 }
 
 .nav-inverse-color {
@@ -55,7 +49,7 @@ html {
     }
 }
 
-.audioParent {
+.audio-parent {
     margin-top: 10px;
 }
 
@@ -120,11 +114,6 @@ ol ol li:last-child {
 
 .body-row {
     width: 100%;
-}
-
-.real-time-body {
-    font-family: 'Open Sans', sans-serif;
-    -webkit-font-smoothing: antialiased;
 }
 
 .top {
@@ -361,7 +350,7 @@ a {
     text-decoration: underline;
 }
 
-.footerImage {
+.footer-image {
     height: 26px;
     padding: 10px;
     box-sizing: initial;
@@ -369,7 +358,13 @@ a {
     -moz-box-sizing: initial;
 }
 
-#toneline {
+@media (max-width: 410px) {
+    .footer-image {
+        display: none;
+    }
+}
+
+#toneLine {
     margin: 0px;
 }
 
@@ -388,6 +383,15 @@ a.type-btn {
     color: black;
     text-decoration: none;
 }
+
+@media (max-width: 300px) {
+    a.type-btn {
+        font-size: 14px;
+        width: 7rem;
+        padding: 2px;
+    }
+}
+
 .switch-button-active {
     background-color: #ececec;
 }
@@ -409,57 +413,63 @@ a.switch-button-active {
 
 .controller {
     border: 2px solid #ececec;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
 }
 
-.levelTogglesBox {
+.button-row {
+    padding: 0px;
+}
+
+.level-toggles-box {
     padding: 0px;
     display: block;
     text-align: center;
 }
 
-.levelToggle {
+.level-toggle {
     border-right: 2px solid #ececec;
     padding: 5px 0px 5px 0px;
     background-color: #f4f4f4;
 }
 
-.levelToggle:hover {
+.level-toggle:hover {
     cursor: pointer;
     background-color: #ececec;
 }
 
-.levelToggleActive {
+.level-toggle-active {
     font-weight: bold;
     background-color: #ececec;
 }
 
-.levelToggleText {
+.level-toggle-text {
     margin: 0px;
     padding: 0px 4px 0px 4px;
 }
 
-.controlRow {
+.control-row {
     width: 100%;
     padding-top: 12px;
 }
 
-.controlBar {
+.control-bar {
     display: -webkit-inline-box;
     align-items: center;
-    height: 20px;
     padding: 0px;
 }
 
-.toneControl {
+.tone-control {
     height: 24px;
     text-align: center;
     padding: 0px;
 }
 
-.toneSwatch {
+@media (max-width: 768px) {
+    .tone-control {
+        margin-bottom: 24px;
+    }
+}
+
+.tone-swatch {
     height: 20px;
     width: 20px;
     border: 4px solid;
@@ -467,14 +477,34 @@ a.switch-button-active {
     margin: 0 auto;
 }
 
-.toneSwatchInner {
+.tone-swatch-inner {
     height: 17px;
     width: 17px;
     border: 2px solid white;
     align-self: center;
 }
 
-.toneLabel {
+.tone-label {
     height: 20px;
     font-size: 12px;
+}
+
+@media (max-width: 325px) {
+    .tone-swatch {
+        height: 16px;
+        width: 16px;
+        border: 3px solid;
+        border-radius: 3px;
+        margin: 0 auto;
+    }
+
+    .tone-swatch-inner {
+        height: 13px;
+        width: 13px;
+        border: 2px solid white;
+        align-self: center;
+    }
+    .tone-label {
+        font-size: 10px;
+    }
 }

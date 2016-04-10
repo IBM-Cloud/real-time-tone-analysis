@@ -1,5 +1,6 @@
 *.log
 node_modules/
+bower_components/
 public/vendor/
 .DS_STORE
 vcap-local.json
