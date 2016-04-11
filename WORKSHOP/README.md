@@ -10,16 +10,17 @@ Welcome to the Real Time Tone Analysis workshop! In this workshop, you will lear
 
 4. **Tone Analyzer** - This section goes over another Watson service, additonal capabilities of the CF CLI, and gives an introduction to Watson patterns.
 
-5. **Real Time Plotting** - This section puts our Watson results to good use by expanding the UI to provide real time cognitive feedback.
+5. **Real Time Plotting** - This section puts our Watson results to good use by expanding the UI to provide real-time charting of our tone analyzer results.
 
-## [Prerequisites](https://ibm.box.com/s/brq6qumkzqfu29hm96tgw8vfa0pcpk1k)
+## [Prerequisites][prereq_pdf]
 
 1. The [Cloud Foundry Command Line Interface][cf_cli_url]
-2. [Node.js][node_download_url] & npm
+2. [Node.js][node_download_url] & npm  
+	Install the [gulp][gulp_npm_url] and [strongloop][strongloop_npm_url] npm modules globally
 3. [Brackets][brackets_url], [Sublime Text][sublime_url], or any other code editor
 4. A [GitHub][gh_url] account
 5. The [git CLI][git_cli_url]
-6. [Google Chrome][chrome_url]
+6. [Google Chrome][chrome_url] or [Firefox][firefox_url]
 7. [A thirst for knowledge][kip_url]
 
 ## Creators
@@ -30,11 +31,15 @@ This workshop was created by the IBM Bluemix Developer Advocacy team in an effor
 * [Anton McConville](https://twitter.com/antonmc)
 
 <!--Links-->
+[prereq_pdf]: https://ibm.box.com/s/brq6qumkzqfu29hm96tgw8vfa0pcpk1k
 [cf_cli_url]: https://github.com/cloudfoundry/cli
 [node_download_url]:https://nodejs.org/en/download/
+[gulp_npm_url]: https://www.npmjs.com/package/gulp
+[strongloop_npm_url]: https://www.npmjs.com/package/strongloop
 [brackets_url]: http://brackets.io/
 [sublime_url]: https://www.sublimetext.com/
 [gh_url]: https://github.com/
 [git_cli_url]: https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 [chrome_url]: https://www.google.com/chrome/browser/desktop/
+[firefox_url]: https://www.mozilla.org/en-US/firefox/new/
 [kip_url]: https://www.youtube.com/watch?v=za61nlcOxf8
