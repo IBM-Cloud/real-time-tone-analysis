@@ -119,7 +119,7 @@ Simple as that! We still need to a _a little_ work to get it going in our app.
 3. Update [`public/index.html`](./public/index.html) to call this new script
 
 	```
-    <script type="text/javascript" src="js/tone.js"></script>
+	<script type="text/javascript" src="js/tone.js"></script>
 	```
 
 4. To invoke all this code, we need to intercept the text outputs from the Watson Speech to Text service so that we can pass those to the Tone Analyzer service. We will have to make some edits to the files in the [`src/views/displaymetadata.js`](./src/views/displaymetadata.js) folder to do this.
@@ -127,10 +127,10 @@ Simple as that! We still need to a _a little_ work to get it going in our app.
 	```
 	// Call tone analysis in showResult()
 	$('#resultsText').val(baseString);
-   getToneAnalysis(baseString);
-   showMetaData(alternatives[0]);
-   ```
-   Around line 181, insert the `getToneAnalysis()` method with `baseString` as the input. By placing this call here, we only invoke tone analysis on a final result message from Watson. This means that we will only send Watson our StT results after every sentence.
+	getToneAnalysis(baseString);
+	showMetaData(alternatives[0]);
+	```
+	Around line 181, insert the `getToneAnalysis()` method with `baseString` as the input. By placing this call here, we only invoke tone analysis on a final result message from Watson. This means that we will only send Watson our StT results after every sentence.
    
 5. Now that we've made changes to `src/`, we need to rebuild our `public/js/index.js` file. Rerun the browserify build
 
