@@ -12,9 +12,7 @@ function getToneAnalysis(text)  {
  * @param {Object} tone category returned from API
  */
 function getToneValues(toneCategory) {
-  var tone = {
-    id: toneCategory.category_id
-  };
+  var tone = {};
   toneCategory.tones.forEach(function(toneValue) {
     tone[toneValue.tone_id] = +((toneValue.score * 100).toFixed(2));
   });
@@ -53,7 +51,8 @@ function toneCallback(data) {
       tone.sentence = getTones(data.sentences_tone[data.sentences_tone.length - 1]);
 
   // Update Smoothie.js chart
-  toneChart.plotTone(tone);
+  console.log(tone)
+  toneChart.plotValues(tone);
 }
 
 /**

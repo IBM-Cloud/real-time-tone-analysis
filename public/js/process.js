@@ -1,8 +1,37 @@
+// Tone types
+// Add type here if another one becomes available
+var TONE_TYPES = {
+    emotion: {
+        text: 'Emotion',
+        position: Chart.TOGGLE_LEFT,
+        traits: ['anger', 'disgust', 'fear', 'joy', 'sadness']
+    },
+    writing: {
+        text: 'Writing',
+        position: Chart.TOGGLE_MIDDLE,
+        traits: ['analytical', 'confident', 'tentative']
+    },
+    social: {
+        text: 'Social',
+        position: Chart.TOGGLE_RIGHT,
+        traits: ['openness_big5', 'conscientiousness_big5', 'extraversion_big5', 'agreeableness_big5', 'neuroticism_big5']
+    }
+}
+
+// Tone Level Constants
+var TONE_LEVELS = {
+    document: {
+        text: 'Document'
+    },
+    sentence: {
+        text: 'Sentence'
+    }
+};
+
 var toneChart;
 window.onload = function () {
-    toneChart = new Chart('toneLine', 'timeLine', 'sentence', 'emotion');
-    toneChart.createControllers('timeLine');
-    toneChart.addTimeLines();
+    toneChart = new Chart('toneLine', 'timeLine', TONE_TYPES, TONE_LEVELS);
+    toneChart.startCharting('emotion', 'sentence');
     //simulate();
 }
 
@@ -27,7 +56,7 @@ function simulate() {
 
         // Create dummy tone object
         var tone = {
-            doc: {
+            document: {
                 emotion: {
                     anger: docTrait1,
                     disgust: docTrait2,
@@ -36,16 +65,16 @@ function simulate() {
                     sadness: docTrait5
                 },
                 writing: {
-                    analytical: docTrait1,
-                    confident: docTrait2,
-                    tentative: docTrait3
+                    analytical: docTrait3,
+                    confident: docTrait1,
+                    tentative: docTrait2
                 },
                 social: {
-                    openness_big5: docTrait1,
-                    conscientiousness_big5: docTrait2,
-                    extraversion_big5: docTrait3,
-                    agreeableness_big5: docTrait4,
-                    neuroticism_big5: docTrait5
+                    openness_big5: docTrait5,
+                    conscientiousness_big5: docTrait4,
+                    extraversion_big5: docTrait1,
+                    agreeableness_big5: docTrait2,
+                    neuroticism_big5: docTrait3
                 }
             },
             sentence: {
@@ -57,23 +86,22 @@ function simulate() {
                     sadness: senTrait5
                 },
                 writing: {
-                    analytical: senTrait1,
-                    confident: senTrait2,
-                    tentative: senTrait3
+                    analytical: senTrait3,
+                    confident: senTrait1,
+                    tentative: senTrait2
                 },
                 social: {
-                    openness_big5: senTrait1,
-                    conscientiousness_big5: senTrait2,
-                    extraversion_big5: senTrait3,
-                    agreeableness_big5: senTrait4,
-                    neuroticism_big5: senTrait5
+                    openness_big5: senTrait5,
+                    conscientiousness_big5: senTrait4,
+                    extraversion_big5: senTrait1,
+                    agreeableness_big5: senTrait2,
+                    neuroticism_big5: senTrait3
                 }
             }
         };
 
         // Plot new tone lines
-        toneChart.plotTone(tone);
-        console.log(toneChart.getTone());
+        toneChart.plotValues(tone);
 
     }, 2000);
 }
