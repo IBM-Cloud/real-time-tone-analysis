@@ -3,17 +3,17 @@
 var TONE_TYPES = {
     emotion: {
         text: 'Emotion',
-        position: Chart.TOGGLE_LEFT,
+        position: 'left',
         traits: ['anger', 'disgust', 'fear', 'joy', 'sadness']
     },
     writing: {
         text: 'Writing',
-        position: Chart.TOGGLE_MIDDLE,
+        position: 'middle',
         traits: ['analytical', 'confident', 'tentative']
     },
     social: {
         text: 'Social',
-        position: Chart.TOGGLE_RIGHT,
+        position: 'right',
         traits: ['openness_big5', 'conscientiousness_big5', 'extraversion_big5', 'agreeableness_big5', 'neuroticism_big5']
     }
 }

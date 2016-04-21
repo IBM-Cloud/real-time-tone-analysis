@@ -1,12 +1,22 @@
 (function (exports) {
 
-    // Toggle button position constants
-    var TOGGLE_LEFT = 'left',
-        TOGGLE_MIDDLE = 'middle',
-        TOGGLE_RIGHT = 'right';
+    // Converts hex color values into rgb
+    function hexToRgb(hex) {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? {
+            r: parseInt(result[1], 16),
+            g: parseInt(result[2], 16),
+            b: parseInt(result[3], 16)
+        } : null;
+    }
 
-    // Line Style Constants
-    var TIMELINES_STYLES = [[221, 65, 49], [1, 79, 131], [123, 194, 83], [249, 223, 60], [144, 167, 207]];
+    // Return a string value of the rgb/rgba object
+    function rgbToString(color, a){
+        if (a)
+            return "rgba(" + color.r + "," + color.g + "," + color.b + "," + a + ")";
+        else
+            return "rgb(" + color.r + "," + color.g + "," + color.b + ")";
+    }
 
     /**
      * Initializes a chart object with a canvas and timeseries
@@ -20,7 +30,24 @@
         // Itialize chart
         this.configs = $.extend({}, Chart.defaultConfigs, configs);
         this.chart = new SmoothieChart(configs);
+
+        // Add random colors to type traits
+        for (var type in types) {
+            // Get array of random colors
+            var colors = randomColor({
+               count: types[type].traits.length,
+               luminosity: 'bright',
+               hue: 'random'
+            });
+            // Convert hex values to rgb
+            for (var i=0; i < colors.length; i++) {
+                colors[i] = hexToRgb(colors[i]);
+            }
+            // Add colors array to each type
+            types[type].colors = colors;
+        }
         this.types = types;
+
         this.levels = levels;
         this.timelines = [];
 
@@ -182,10 +209,10 @@
             this.chart.removeTimeSeries(this.timelines[swatch.dataset.trait+"-"+swatch.dataset.level]);
         } else {
             swatch.dataset.state = 'on';
-            swatch.style.background = swatch.dataset.mycolor;
+            var swatchColor = {r:swatch.dataset.red,g:swatch.dataset.green,b:swatch.dataset.blue};
+            swatch.style.background = rgbToString(swatchColor);
             this.chart.addTimeSeries(this.timelines[swatch.dataset.trait+"-"+swatch.dataset.level],
-                                     createTimeSeriesOptions(swatch.dataset.trait,
-                                     swatch.dataset.index));
+                                     createTimeSeriesOptions(swatch.dataset.trait, swatchColor));
         }
     };
 
@@ -193,9 +220,8 @@
     /**
      * Adds a timeseries control to the Smoothiechart control bar
      */
-    Chart.prototype.addControl = function (index, trait, level, length) {
-
-        var rgb = "rgb(" + TIMELINES_STYLES[index][0] + "," + TIMELINES_STYLES[index][1] + "," + TIMELINES_STYLES[index][2] + ")";
+    Chart.prototype.addControl = function (index, trait, color, level, length) {
+        var rgb = rgbToString(color);
 
         var toggle = document.createElement('div');
         var colClass = "col-sm-" + (Math.floor(12/length));
@@ -211,7 +237,9 @@
         swatch.dataset.trait = trait;
         swatch.dataset.level = level;
         swatch.dataset.index = index;
-        swatch.dataset.mycolor = rgb;
+        swatch.dataset.red = color.r;
+        swatch.dataset.green = color.g;
+        swatch.dataset.blue = color.b;
         swatch.onclick = function (e) {
             this.toggleTimeLine(e.target)
         }.bind(this);
@@ -293,8 +321,8 @@
         // Add new timelines and controls
         for (var i = 0; i < this.types[newType].traits.length; i++) {
             this.chart.addTimeSeries(this.timelines[this.types[newType].traits[i]+"-"+newLevel],
-                                     createTimeSeriesOptions(this.types[newType].traits[i], i));
-            this.addControl(i, this.types[newType].traits[i], newLevel, this.types[newType].traits.length);
+                                     createTimeSeriesOptions(this.types[newType].traits[i], this.types[newType].colors[i]));
+            this.addControl(i, this.types[newType].traits[i], this.types[newType].colors[i], newLevel, this.types[newType].traits.length);
         }
     }
 
@@ -417,13 +445,13 @@
     /**
      * Creates a options needed for adding a TimeSeries
      * @param {string}  timeseries sentiment
-     * @param {int}     index of TIMELINES_STYLES[] for timeseries styling
+     * @param {Object}  rgb color of the sentiment line
      */
-    function createTimeSeriesOptions(sentiment, i) {
+    function createTimeSeriesOptions(sentiment, color) {
         return {
             sentiment: sentiment,
-            strokeStyle: ('rgb(' + TIMELINES_STYLES[i][0] + ',' + TIMELINES_STYLES[i][1] + ',' + TIMELINES_STYLES[i][2] + ')'),
-            fillStyle: ('rgba(' + TIMELINES_STYLES[i][0] + ',' + TIMELINES_STYLES[i][1] + ',' + TIMELINES_STYLES[i][2] + ',0.0)'),
+            strokeStyle: (rgbToString(color)),
+            fillStyle: (rgbToString(color, "0.0")),
             lineWidth: 3
         };
     }

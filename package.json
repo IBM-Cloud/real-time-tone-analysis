@@ -1,6 +1,6 @@
 {
 	"name": "realtime-tone",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Analyze the tone of spoken words in real time using Bluemix and Watson",
 	"scripts": {
 		"start": "node app.js",
