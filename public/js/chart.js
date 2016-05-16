@@ -225,7 +225,7 @@
 
         var toggle = document.createElement('div');
         var colClass = "col-sm-" + (Math.floor(12/length));
-        if (index==0 && 12 % length) colClass += " col-sm-offset-" + (Math.floor((12 % length)/2));
+        if (index===0 && 12 % length) colClass += " col-sm-offset-" + (Math.floor((12 % length)/2));
         toggle.className = "trait-control " + colClass + " col-xs-4";
 
         // Creat a control element for toggling the timeseries line
@@ -241,17 +241,29 @@
         swatch.dataset.green = color.g;
         swatch.dataset.blue = color.b;
         swatch.onclick = function (e) {
-            this.toggleTimeLine(e.target)
+            this.toggleTimeLine(e.target);
         }.bind(this);
 
         // Create a label for the timeseries control
         var label = document.createElement('label');
         label.className = "trait-label";
-        label.innerHTML = trait.split("_")[0];
+        console.log(trait);
+        var traitStringArray = trait.split("_");
+        // Concatenate traits with underscores and remove 'big5' string
+        if (traitStringArray.length > 1) {
+            for (var i=0; i < traitStringArray.length; i++) {
+                if (traitStringArray[i] !== "big5") {
+                    label.innerHTML += traitStringArray[i] + " ";
+                }
+            }
+            label.innerHTML.trim();
+        }
+        else
+            label.innerHTML = trait;
         label.color = rgb;
 
         // Add control elements to the DOM
-        toggle.appendChild(swatch)
+        toggle.appendChild(swatch);
         toggle.appendChild(label);
         document.getElementById('controlBar').firstChild.appendChild(toggle);
     };

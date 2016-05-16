@@ -376,7 +376,7 @@ a {
     display: inline-block;
     border: 1px solid #ececec;
     cursor: pointer;
-    width: 8rem;
+    width: 9rem;
     padding: 3px;
 }
 a.type-btn {
@@ -477,11 +477,8 @@ a.switch-button-active {
     margin: 0 auto;
 }
 
-.trait-swatch-inner {
-    height: 17px;
-    width: 17px;
-    border: 2px solid white;
-    align-self: center;
+.trait-swatch:hover {
+    cursor: pointer;
 }
 
 .trait-label {

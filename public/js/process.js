@@ -6,17 +6,17 @@ var TONE_TYPES = {
         position: 'left',
         traits: ['anger', 'disgust', 'fear', 'joy', 'sadness']
     },
-    writing: {
-        text: 'Writing',
+    language: {
+        text: 'Language',
         position: 'middle',
         traits: ['analytical', 'confident', 'tentative']
     },
     social: {
         text: 'Social',
         position: 'right',
-        traits: ['openness_big5', 'conscientiousness_big5', 'extraversion_big5', 'agreeableness_big5', 'neuroticism_big5']
+        traits: ['openness_big5', 'conscientiousness_big5', 'extraversion_big5', 'agreeableness_big5', 'emotional_range_big5']
     }
-}
+};
 
 // Tone Level Constants
 var TONE_LEVELS = {
@@ -64,7 +64,7 @@ function simulate() {
                     joy: docTrait4,
                     sadness: docTrait5
                 },
-                writing: {
+                language: {
                     analytical: docTrait3,
                     confident: docTrait1,
                     tentative: docTrait2
@@ -74,7 +74,7 @@ function simulate() {
                     conscientiousness_big5: docTrait4,
                     extraversion_big5: docTrait1,
                     agreeableness_big5: docTrait2,
-                    neuroticism_big5: docTrait3
+                    emotional_range_big5: docTrait3
                 }
             },
             sentence: {
@@ -85,7 +85,7 @@ function simulate() {
                     joy: senTrait4,
                     sadness: senTrait5
                 },
-                writing: {
+                language: {
                     analytical: senTrait3,
                     confident: senTrait1,
                     tentative: senTrait2
@@ -95,7 +95,7 @@ function simulate() {
                     conscientiousness_big5: senTrait4,
                     extraversion_big5: senTrait1,
                     agreeableness_big5: senTrait2,
-                    neuroticism_big5: senTrait3
+                    emotional_range_big5: senTrait3
                 }
             }
         };
