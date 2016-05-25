@@ -45,16 +45,17 @@ Now that we understand what Watson does and have seen several use cases, let's s
 
 2. Next, we will update our [`app.js`](./app.js) file to leverage this module with the credentials from the service we just created
 
-	```
+	```node
 	var express   = require('express'),
 		app         = express(),
 		bodyParser  = require('body-parser'),
-		cfenv       = require('cfenv'), //*****<-- Replace ; with a ,
-		watson      = require('watson-developer-cloud'); //*****<-- Add this
+		cfenv       = require('cfenv'), // ***<-- Replace ; with a ,
+		watson      = require('watson-developer-cloud'); // ***<-- Add this
 	...
 	...
 	...
-	//*****Add the following functions
+	
+	// ***Add the following functions***
 	
 	// Configure Watson Speech to Text service
 	var speechCreds = {
@@ -81,7 +82,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 
 4. Next, grab the code from [`public/index.html`](./public/index.html) This will introduce a few new elements to invoke the Speech to Text service and display the results. It will also use the new stylesheet we just brought in.
 
-5. Add the following images to the `/public/image` folder:
+5. Add the following images to your `/public/image` folder:
 	* [`microphone.svg`](./public/images/microphone.svg) - begin recording speech
 	* [`play.svg`](./public/images/play.svg) - play the sample audio file
 	* [`play-red.svg`](./public/images/play-red.svg) - clicked the play button
@@ -105,13 +106,14 @@ Now that we understand what Watson does and have seen several use cases, let's s
 
 9. We are going to compile and concatenate these files with [browserify][browserify_url] to create the [`public/js/index.js`](./public/js/index.js) file. To do this, we first need to add several parameters to [`package.json`](./package.json) so that this same process occurs when we push our app to Bluemix
 	
-	```
+	```json
 	"scripts": {
-		"start": "node app.js",
-		"build": "browserify src/index.js | uglifyjs -nc > public/js/index.js",
-		"watch": "watchify -v -d -o public/js/index.js src/index.js",
-		"postinstall": "bower install --alow-root && gulp"
-	},
+		"start": "node app.js", // ***<-- Add a , here
+		"build": "browserify src/index.js | uglifyjs -nc > public/js/index.js", // ***<-- Add this
+		"watch": "watchify -v -d -o public/js/index.js src/index.js", // ***<-- Add this
+		"postinstall": "bower install --alow-root && gulp" // ***<-- Add this
+	}, 
+	// ***Add all objects below here***
 	"devDependencies": {
 		"browserify": "^12.0.1",
 		"browserify-shim": "^3.8.12",
@@ -132,9 +134,9 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	```
 	$ npm install bower@1.6.x gulp@3.5.x --save
 	```
-	When these tools execute, we need to give them scripts to execute. For this we will create the [`bower.json`](./bower.json) and [`gulpfile.js`](./gulpfile.js) files
+	When these tools are run, we need to give them scripts to execute. For this we will create the [`bower.json`](./bower.json) and [`gulpfile.js`](./gulpfile.js) files
 
-	```
+	```json
 	{
 	  "name": "realtime-tone",
 	  "version": "1.0.0",
@@ -150,7 +152,8 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	  }
 	}
 	```
- 	```
+
+ 	```js
  	var gulp = require('gulp');
 
 	// Grab js files from bower_components and add them to public/vendor
@@ -169,7 +172,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	
 	After that is done, execute the following commands
 	
-	```
+	```bash
 	$ npm install
 	$ mkdir public/js
 	$ npm run build
@@ -177,7 +180,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 
 10. Update your [`public/index.html`](./public/index.html) file again to call this and several other dependent scripts
 
-	```
+	```html
 	<!-- Place js files at the end of the document -->
     <script type="text/javascript" src="vendor/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="vendor/bootstrap/bootstrap.min.js"></script>
@@ -188,7 +191,7 @@ Now that we understand what Watson does and have seen several use cases, let's s
 
 12. Push the app to Bluemix and verify everything works there as well
 
-	```
+	```bash
 	$ cf push
 	```
 
@@ -197,11 +200,11 @@ Now, you were probably wondering why we inserted our credentials for the Speech 
 
 When running in Bluemix, the credentials of any services that are bound to the application are passed in via the VCAP_SERVICES environement variable. Since these credentials will be accessible as environment variables when the app is running on Bluemix, we want to emulate this behavior when running locally. To create this environment parity between Bluemix and our local machines, we will use the `cfenv` Node.js package.
 
-1. Create an empty vcap-local.json file.
+1. Create an empty `vcap-local.json` file.
 
-2. Go to your Bluemix application dashbaord, click on Environment Variables, and then VCAP_SERVICES. Copy this json to your vcap-local.json file. It should look something like this:
+2. Go to your Bluemix application dashbaord, click on Environment Variables, and then VCAP_SERVICES. Copy this json to your [`vcap-local.json`](./vcap-local.json) file. It should look something like this:
 
-	```
+	```json
 	{
 	  "services": {
 	    "speech_to_text": [
@@ -222,7 +225,8 @@ When running in Bluemix, the credentials of any services that are bound to the a
 
 3. Update [`app.js`](./app.js) to read from the `vcap-local.json` file for the `cfenv` module configuration
 
-	```
+	```node
+	// ***Add this right after the require statements***
 	// cfenv provides access to your Cloud Foundry environment
 	var vcapLocal = null
 	try {
@@ -235,6 +239,7 @@ When running in Bluemix, the credentials of any services that are bound to the a
 	...
 	...
 	...
+	// ***Replace the hard-coded credentials from step 1 above***
 	// Configure Watson Speech to Text service
 	var speechCreds = getServiceCreds(appEnv, 'rtt-speech-to-text');
 	speechCreds.version = 'v1';
@@ -242,6 +247,7 @@ When running in Bluemix, the credentials of any services that are bound to the a
 	...
 	...
 	...
+	// ***Add this to the bottom of your file***
 	// Retrieves service credentials for the input service
 	function getServiceCreds(appEnv, serviceName) {
 	  var serviceCreds = appEnv.getServiceCreds(serviceName)

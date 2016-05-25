@@ -8,13 +8,13 @@ In step 2 and 3, we added and bound a service through the Bluemix UI. However, w
 
 1. Create the Tone Analyzer service in Bluemix
 
-  ```
-  $ cf create-service tone_analyzer beta rtt-tone-analyzer
+  ```bash
+  $ cf create-service tone_analyzer standard rtt-tone-analyzer
   ```
   
 2. Bind the tone analyzer service instance to the `realtime-tone` app
 
-  ```
+  ```bash
   $ cf bind-service realtime-tone rtt-tone-analyzer
   ```
 
@@ -24,11 +24,12 @@ Simple as that! We still need to a _a little_ work to get it going in our app.
 
 1. First, we need to update [`app.js`](./app.js) with routes to handle requests for tone analysis
 
-	```
+	```node
+	// ***Add this below the Watson methods and routes***
 	// Configure Watson Tone Analyzer service
 	var toneCreds = getServiceCreds(appEnv, 'rtt-tone-analyzer');
-	toneCreds.version = 'v3-beta';
-	toneCreds.version_date = '2016-11-02';
+	toneCreds.version = 'v3';
+	toneCreds.version_date = '2016-05-19';
 	var toneAnalyzer = watson.tone_analyzer(toneCreds);
 	
 	// Request handler for tone analysis
@@ -44,7 +45,7 @@ Simple as that! We still need to a _a little_ work to get it going in our app.
 
 2. Create a file called [`public/js/tone.js`](./public/js/tone.js) and populate it with the following code
 
-	```
+	```js
 	/**
 	 * AJAX Post request for tone analyzer api
 	 * @param {String} request body text
@@ -59,9 +60,7 @@ Simple as that! We still need to a _a little_ work to get it going in our app.
 	 * @param {Object} tone category returned from API
 	 */
 	function getToneValues(toneCategory) {
-	  var tone = {
-	    id: toneCategory.category_id
-	  };
+	  var tone = {};
 	  toneCategory.tones.forEach(function(toneValue) {
 	    tone[toneValue.tone_id] = +((toneValue.score * 100).toFixed(2));
 	  });
@@ -118,13 +117,13 @@ Simple as that! We still need to a _a little_ work to get it going in our app.
 
 3. Update [`public/index.html`](./public/index.html) to call this new script
 
-	```
+	```html
 	<script type="text/javascript" src="js/tone.js"></script>
 	```
 
 4. To invoke all this code, we need to intercept the text outputs from the Watson Speech to Text service so that we can pass those to the Tone Analyzer service. We will have to make some edits to the files in the [`src/views/displaymetadata.js`](./src/views/displaymetadata.js) folder to do this.
 
-	```
+	```js
 	// Call tone analysis in showResult()
 	$('#resultsText').val(baseString);
 	getToneAnalysis(baseString);
@@ -134,20 +133,20 @@ Simple as that! We still need to a _a little_ work to get it going in our app.
    
 5. Now that we've made changes to `src/`, we need to rebuild our `public/js/index.js` file. Rerun the browserify build
 
-  ```
+  ```bash
   $ npm run build
   ```
 
 6. Update [`vcap-local.json`](./vcap-local.json) with the new tone analyzer service
 
-	```
+	```json
 	"tone_analyzer": [
       {
         "name": "rtt-tone-analyzer",
         "label": "tone_analyzer",
-        "plan": "beta",
+        "plan": "standard",
         "credentials": {
-          "url": "https://gateway.watsonplatform.net/tone-analyzer-beta/api",
+          "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
           "isStreaming": false,
           "username": "USERNAME",
           "password": "PASSWORD"
@@ -158,7 +157,7 @@ Simple as that! We still need to a _a little_ work to get it going in our app.
 
 	To get the credentials without returning to the Bluemix UI, we can issue the following command using the CLI
 
-	```
+	```bash
 	$ cf env realtime-tone
 	```
 
@@ -170,7 +169,7 @@ Great! We're now analyzing the text coming back from the Speech to text service 
 
 1. Update [`public/index.html`](./public/index.html) to include fields for the tone analysis results in the save modal
 
-	```
+	```html
 	<div class="form-group">
 	    <label for="usr">Tone Level:</label>
 	    <input type="text" class="form-control" readonly id="toneLevelToSave">
@@ -184,16 +183,17 @@ Great! We're now analyzing the text coming back from the Speech to text service 
 
 2. Update the [`public/js/tone.js`](./public/js/tone.js) file so that we are continuously saving the tone results to a global variable called `lastToneResult`
 
-	```
+	```js
+	// ***Place as a global variable***
 	var lastToneResult = {};
 	...
-  	// Save the last result from TA in toneCallback()
+  	// ***Save the result from TA at then end of toneCallback()***
   	lastToneResult = tone;
 	```
 
 3. Update the [`public/js/save.js`](./public/js/save.js) file to grab the `lastToneResult` and save it along with the Speech to Text results.
 
-	```
+	```js
 	if (lastToneResult) {
 		$("#toneLevelToSave").val('document');
 		$("#toneValueToSave").val(JSON.stringify(lastToneResult.doc, null, ' '));
@@ -210,7 +210,7 @@ Great! We're now analyzing the text coming back from the Speech to text service 
 
 4. Test locally
 
-5. Make a GET (go to it in your browser) to `http://cloudantAPI-USERNAME.mybluemix.net/api/Items` to ensure everything is working. We should now be seeing the tone analysis results posted as well.
+5. Make a GET (go to it in your browser) to `http://cloudantAPI-<USERNAME.mybluemix>.net/api/Items` to ensure everything is working. We should now be seeing the tone analysis results posted as well.
 
 6. Push the updated `realtime-tone` app back to Bluemix
 

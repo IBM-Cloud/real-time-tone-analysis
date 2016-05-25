@@ -17,6 +17,10 @@ gulp.task('smoothie', function() {
     return gulp.src('bower_components/smoothie/smoothie.js')
       .pipe(gulp.dest('public/vendor/smoothie'));
 });
+gulp.task('random-color', function() {
+    return gulp.src('bower_components/randomcolor/randomColor.js')
+      .pipe(gulp.dest('public/vendor/random-color'));
+});
 
 // Default Task
-gulp.task('default', ['bootstrap','jquery','element-resize', 'smoothie']);
+gulp.task('default', ['bootstrap','jquery','element-resize', 'smoothie', 'random-color']);

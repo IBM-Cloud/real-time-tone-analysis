@@ -13,9 +13,7 @@ function getToneAnalysis(text)  {
  * @param {Object} tone category returned from API
  */
 function getToneValues(toneCategory) {
-  var tone = {
-    id: toneCategory.category_id
-  };
+  var tone = {};
   toneCategory.tones.forEach(function(toneValue) {
     tone[toneValue.tone_id] = +((toneValue.score * 100).toFixed(2));
   });

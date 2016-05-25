@@ -33,7 +33,7 @@ window.onload = function () {
     toneChart = new Chart('toneLine', 'timeLine', TONE_TYPES, TONE_LEVELS);
     toneChart.startCharting('emotion', 'sentence');
     //simulate();
-}
+};
 
 function simulate() {
 

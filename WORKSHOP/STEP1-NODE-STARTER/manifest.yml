@@ -4,5 +4,4 @@ applications:
   memory: 256M
   instances: 1
   path: .
-  command: node app.js
   disk_quota: 1024M

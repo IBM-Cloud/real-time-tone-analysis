@@ -5,14 +5,13 @@ declared-services:
     plan: standard
   rtt-tone-analyzer:
     label: tone_analyzer
-    plan: beta
+    plan: standard
 applications:
 - name: realtime-tone
   host: realtime-tone
   memory: 256M
   instances: 1
   path: .
-  command: node app.js
   disk_quota: 1024M
   services:
   - rtt-speech-to-text

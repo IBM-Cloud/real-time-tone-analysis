@@ -6,13 +6,13 @@ We have our base application working at this point. We have a Node.js back end r
 
 1. Run this command to install Strongloop
 
-	```
+	```bash
 	npm install -g strongloop
 	```
 
 2. Run this command to start the API creation wizard
 
-	```
+	```bash
 	slc loopback
 	```
 
@@ -23,12 +23,12 @@ We have our base application working at this point. We have a Node.js back end r
 
 4. For this workshop, we will be using a [Cloudant NoSQL database][cloudant_url]. Built on CouchDB, Cloudant makes it extremely simple to bootstrap a CRUD interface and is 100% accessible through a RESTful API. To set up our Loopback API to interface with Cloudant, we need to first install the proper module:
 
-	```
+	```bash
 	npm install loopback-connector-cloudant --save
 	```
 5. Run the following command to set up the API:
 
-	```
+	```bash
 	slc loopback:model
 	? Enter the model name: Item
 	? Select the data-source to attach Item to: db (memory)
@@ -48,7 +48,7 @@ Your API is ready, but it's currently using an in-memory database. If you restar
 
 1. Update [`server/datasources.json`](./myLoopbackAPI/server/datasources.json) to just:
 
-	```
+	```json
 	{ }
 	```
 
@@ -66,7 +66,7 @@ Your API is ready, but it's currently using an in-memory database. If you restar
 
 4. Create the file `server/datasources.local.js` and add this code:
 
-	```
+	```js
 	var http = require('http');
 	var request = require('request');
 	
@@ -96,19 +96,19 @@ Your API is ready, but it's currently using an in-memory database. If you restar
 	```
 	Copy the `url` field from your Cloudant credentials to
 
-	```
+	```js
 	var url = "PUT_URL_HERE";
 	```
 
 5. Next, install the `request` module
 
-	```
+	```bash
 	npm install request --save
 	```
 
 6. Start the server!
 
-	```
+	```bash
 	node .
 	```
 
@@ -119,22 +119,22 @@ Your API Explorer API at `http://0.0.0.0:3000/explorer`
 
 1. We don't want to push the `node_modules` folder to Bluemix. So, lets create a `.cfignore` file
 
-	```
+	```bash
 	echo node_modules >> .cfignore
 	```
 
 2. Then, push the application to Bluemix, but don't start the app yet
 
-	```
-	cf push cloudantAPI-USERNAME --no-start
+	```bash
+	cf push cloudantAPI-<USERNAME> --no-start
 	```
 	
-	If we tried to start the app now, it would fail since it needs a bound Cloudant database.
+	If we tried to start the app now, it would fail since it needs to be bound Cloudant database.
 
 3. Go to your new app's dashboard and click on `Bind a Service`, choose the `rtt-cloudant` service you created earlier. You'll be prompted to restage. Click Yes. After that completes (about a minute):
 
-Your REST API is available at `http://cloudantAPI-USERNAME.mybluemix.net/api/Items`  
-Your API Explorer API at `http://cloudantAPI-USERNAME.mybluemix.net/explorer`
+Your REST API is available at `http://cloudantAPI-<USERNAME>.mybluemix.net/api/Items`  
+Your API Explorer API at `http://cloudantAPI-<USERNAME>.mybluemix.net/explorer`
 
 ## Update your app for saving
 
@@ -142,7 +142,7 @@ Let's update our `realtime-tone` app now so that it leverages this new Cloudant 
 
 1. Update [`public/index.html`](./public/index.html) with a save button and a modal view for viewing Speech to Text results before we save
 
-	```
+	```html
 	<li class="save-results button-row nav-inverse-color"  data-toggle="modal" data-target="#myModal" onclick = "prepareDataForSave()">
        <img src="images/save.svg" class="icon">
        <span class="nav-label">Save Results</span>
@@ -184,7 +184,7 @@ Let's update our `realtime-tone` app now so that it leverages this new Cloudant 
 
 3. Update the `nav-inverse-color` class in [`public/stylesheets/style.css`](./public/stylesheets/style.css) as follows
 
-	```
+	```css
 	@media (min-width: 730px) {
 	  .nav-inverse-color {
 	    width: 25%;
@@ -194,7 +194,7 @@ Let's update our `realtime-tone` app now so that it leverages this new Cloudant 
 
 4. Create a file called [`public/js/save.js`](./public/js/save.js) which handles saving the Speech to Text results for the session
 	
-	```
+	```js
 	//Fill out the fields in the Save form
 	function prepareDataForSave(){
 		//Get text
@@ -223,19 +223,19 @@ Let's update our `realtime-tone` app now so that it leverages this new Cloudant 
 
 	Update the POST call in `public/js/save.js` to call your new API:
 
-	```
+	```js
 	$.post( "http://cloudantAPI-USERNAME.mybluemix.net/api/Items", dataToSend,function( data ) {
 	```
 
 5. Return to [`public/index.html`](./public/index.html) and add a script for the `public/js/save.js` file
 
-	```
+	```html
     <script type="text/javascript" src="js/save.js"></script>
 	```
 
 5. Test the app locally
 
-6. Make a GET (go to it in your browser) to `http://cloudantAPI-USERNAME.mybluemix.net/api/Items` to ensure everything is working.
+6. Make a GET (go to it in your browser) to `http://cloudantAPI-<USERNAME>.mybluemix.net/api/Items` to ensure everything is working.
 
 7. Push the updated `realtime-tone` app back to Bluemix
 

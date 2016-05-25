@@ -23,13 +23,13 @@ var express   = require('express'),
   watson      = require('watson-developer-cloud');
 
 // cfenv provides access to your Cloud Foundry environment
-var vcapLocal = null
+var vcapLocal = null;
 try {
-  vcapLocal = require("./vcap-local.json")
+  vcapLocal = require("./vcap-local.json");
 }
 catch (e) {}
 
-var appEnvOpts = vcapLocal ? {vcap:vcapLocal} : {}
+var appEnvOpts = vcapLocal ? {vcap:vcapLocal} : {};
 var appEnv = cfenv.getAppEnv(appEnvOpts);
 
 // Configure Express
@@ -62,8 +62,8 @@ app.post('/api/token', function(req, res, next) {
 
 // Configure Watson Speech to Text service
 var toneCreds = getServiceCreds(appEnv, 'rtt-tone-analyzer');
-toneCreds.version = 'v3-beta';
-toneCreds.version_date = '2016-11-02';
+toneCreds.version = 'v3';
+toneCreds.version_date = '2016-05-19';
 var toneAnalyzer = watson.tone_analyzer(toneCreds);
 
 // Request handler for tone analysis
@@ -83,7 +83,7 @@ app.get('/', function(req, res) {
 
 // Retrieves service credentials for the input service
 function getServiceCreds(appEnv, serviceName) {
-  var serviceCreds = appEnv.getServiceCreds(serviceName)
+  var serviceCreds = appEnv.getServiceCreds(serviceName);
   if (!serviceCreds) {
     console.log("service " + serviceName + " not bound to this application");
     return null;

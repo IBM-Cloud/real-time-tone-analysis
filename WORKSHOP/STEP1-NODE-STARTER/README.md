@@ -14,15 +14,15 @@ The following are our goals for you, the developer, to achieve by the end of thi
 
 ## Let's get started
 
-1. Create a folder called "real-time-tone"
+1. Create a folder called "realtime-tone"
 
 2. Open up the Bluemix Catalog UI and navigate to the [SDK for Node.js Runtime Starter][node.js_runtime_url] to create a NodeJS hello world app
 	* Name it `realtime-tone`
-	* Give it a similar host name, something like `realtime-tone-USERNAME`. The host you choose will be the subdomain of your app's path.
+	* Give it a similar host name, something like `realtime-tone-<USERNAME>`. The host you choose will be the subdomain of your app's path.
 
 3. Download the starter code from the `Download Starter Code` button Bluemix gives you and unzip it to the folder that you created in Step 2.
 
-4. Give it a minute or so to start, and then navigate to your running app to see it working - for instance `realtime-tone-am.mybluemix.net`
+4. Give it a minute or so to start, and then navigate to your running app to see it working - for instance `realtime-tone-<USERNAME>.mybluemix.net`
 
 
 
@@ -49,7 +49,7 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 
 5. Update the [`index.html`](./public/index.html) code to the basic layout of the app we are going to build
 
-	```
+	```html
 	<head>
 	    <title>Real Time Tone</title>
 	    <meta charset="utf-8">
@@ -103,7 +103,7 @@ Now we're going to begin with a basic workflow. We'll make the app run locally o
 	$ cf push
 	```
 
-10. Now that our app is deploying, let's check the logs to make sure everything is going smoothly. We can do this in several ways:
+10. While our app is deploying, let's check the logs to make sure everything is going smoothly. We can do this in several ways:
 	* Navigate to the 'Logs' section in your app's dashboard in the Bluemix UI
 	* Get the logs using the CF CLI
 

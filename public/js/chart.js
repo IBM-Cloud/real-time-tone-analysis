@@ -83,7 +83,7 @@
         labels: {
             fillStyle: 'rgb(60, 0, 0)'
         }
-    }
+    };
 
 
     /**
@@ -120,7 +120,7 @@
         }
         else
             console.error("Cannot set chart type to ", newType);
-    }
+    };
 
 
     /**
@@ -133,7 +133,7 @@
         }
         else
             console.error("Cannot set chart level to ", newLevel);
-    }
+    };
 
 
     /**
@@ -204,7 +204,7 @@
     Chart.prototype.toggleTimeLine = function (swatch) {
         if (swatch.dataset.state === 'on') {
             swatch.dataset.state = 'off';
-            swatch.style.background = 'white'
+            swatch.style.background = 'white';
 
             this.chart.removeTimeSeries(this.timelines[swatch.dataset.trait+"-"+swatch.dataset.level]);
         } else {
@@ -247,7 +247,6 @@
         // Create a label for the timeseries control
         var label = document.createElement('label');
         label.className = "trait-label";
-        console.log(trait);
         var traitStringArray = trait.split("_");
         // Concatenate traits with underscores and remove 'big5' string
         if (traitStringArray.length > 1) {
@@ -278,7 +277,7 @@
         this.values = values;
 
         // Loop thru levels in new values
-        var date = new Date().getTime()
+        var date = new Date().getTime();
         for (var level in this.levels) {
             if ($.isEmptyObject(values[level])) continue;
 
@@ -336,7 +335,7 @@
                                      createTimeSeriesOptions(this.types[newType].traits[i], this.types[newType].colors[i]));
             this.addControl(i, this.types[newType].traits[i], this.types[newType].colors[i], newLevel, this.types[newType].traits.length);
         }
-    }
+    };
 
 
     /**
