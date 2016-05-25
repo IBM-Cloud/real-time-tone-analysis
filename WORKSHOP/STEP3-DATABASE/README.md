@@ -28,7 +28,7 @@ We have our base application working at this point. We have a Node.js back end r
 	```
 5. Run the following command to set up the API:
 
-	```bash
+	```
 	slc loopback:model
 	? Enter the model name: Item
 	? Select the data-source to attach Item to: db (memory)
@@ -66,7 +66,7 @@ Your API is ready, but it's currently using an in-memory database. If you restar
 
 4. Create the file `server/datasources.local.js` and add this code:
 
-	```js
+	```node
 	var http = require('http');
 	var request = require('request');
 	

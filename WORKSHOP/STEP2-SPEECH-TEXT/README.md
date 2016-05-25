@@ -108,12 +108,11 @@ Now that we understand what Watson does and have seen several use cases, let's s
 	
 	```json
 	"scripts": {
-		"start": "node app.js", // ***<-- Add a , here
-		"build": "browserify src/index.js | uglifyjs -nc > public/js/index.js", // ***<-- Add this
-		"watch": "watchify -v -d -o public/js/index.js src/index.js", // ***<-- Add this
-		"postinstall": "bower install --alow-root && gulp" // ***<-- Add this
+		"start": "node app.js",
+		"build": "browserify src/index.js | uglifyjs -nc > public/js/index.js",
+		"watch": "watchify -v -d -o public/js/index.js src/index.js",
+		"postinstall": "bower install --alow-root && gulp"
 	}, 
-	// ***Add all objects below here***
 	"devDependencies": {
 		"browserify": "^12.0.1",
 		"browserify-shim": "^3.8.12",
