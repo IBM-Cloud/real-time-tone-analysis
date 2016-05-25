@@ -12,7 +12,8 @@ We could build a chart ourselves, but I don't think we quite have the time for t
 	"dependencies": {
 	    "bootstrap": "3.3.x",
 	    "jquery": "1.11.3",
-	    "javascript-detect-element-resize": "0.5.x",	    "smoothie": "1.27.x",
+	    "javascript-detect-element-resize": "0.5.x",
+	    "smoothie": "1.27.x",
 	    "randomcolor": "0.4.x"
 	  }
 	```
