@@ -12,7 +12,7 @@ gulp.task('jquery', function() {
 
 // Grab the files from /updated_files so we can fast-forward steps
 gulp.task('server-files', function() {
-    return gulp.src(['updated_files/*.js', 'updated_files/(?!package).json'])
+    return gulp.src(['updated_files/*.js', 'updated_files/*.json'])
       .pipe(gulp.dest('./'));
 });
 
