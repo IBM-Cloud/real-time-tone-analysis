@@ -1,0 +1,14 @@
+---
+declared-services:
+  rtt-speech-to-text:
+    label: speech_to_text
+    plan: standard
+applications:
+- name: realtime-tone
+  host: realtime-tone-USERNAME
+  memory: 256M
+  instances: 1
+  path: .
+  disk_quota: 1024M
+  services:
+  - rtt-speech-to-text

@@ -1,0 +1,8 @@
+*.log
+*.DS_STORE
+node_modules/
+bower_components/
+public/vendor/
+updated_files/
+README.md
+vcap-local.json

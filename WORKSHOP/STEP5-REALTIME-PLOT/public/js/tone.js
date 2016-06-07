@@ -51,7 +51,7 @@ function toneCallback(data) {
       tone.sentence = getTones(data.sentences_tone[data.sentences_tone.length - 1]);
 
   // Update Smoothie.js chart
-  toneChart.plotTone(tone);
+  toneChart.plotValues(tone);
 }
 
 /**

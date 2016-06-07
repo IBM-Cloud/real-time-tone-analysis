@@ -1,0 +1,20 @@
+{
+  "name": "realtime-tone-lab",
+  "version": "1.0.0",
+  "description": "Analyze the tone of spoken words in real time using Bluemix and Watson",
+  "scripts": {
+    "start": "node app.js",
+    "postinstall": "bower install --alow-root && gulp"
+  },
+  "dependencies": {
+    "body-parser": "1.14.x",
+    "cfenv": "1.0.x",
+    "express": "4.13.x",
+    "watson-developer-cloud": "^1.8.0",
+    "bower": "1.6.x",
+    "gulp": "3.5.x"
+  },
+  "engines": {
+    "node": "0.12.x"
+  }
+}
