@@ -1,0 +1,28 @@
+{
+  "services": {
+    "speech_to_text": [
+        {
+        "name": "rtt-speech-to-text",
+        "label": "speech_to_text",
+        "plan": "standard",
+        "credentials": {
+          "url": "https://stream.watsonplatform.net/speech-to-text/api",
+          "username": "USERNAME",
+          "password": "PASSWORD"
+        }
+      }
+    ],
+    "tone_analyzer": [
+      {
+        "name": "rtt-tone-analyzer",
+        "label": "tone_analyzer",
+        "plan": "standard",
+        "credentials": {
+          "url": "https://gateway.watsonplatform.net/tone-analyzer/api",
+          "username": "USERNAME",
+          "password": "PASSWORD"
+        }
+      }
+    ]
+  }
+}
